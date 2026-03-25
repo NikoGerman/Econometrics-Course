@@ -1,0 +1,1457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Econometrics — Full Learning Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0f0f0f;--surface:#161616;--s2:#1e1e1e;--border:#2a2a2a;
+  --text:#e8e4dc;--muted:#888;--dim:#555;--code:#0d0d0d;
+  /* Part 1 — warm gold */
+  --p1:#c8a96e;--p1b:rgba(200,169,110,.08);
+  --m1:#c8a96e;--m2:#d49a50;--m3:#b87e5a;
+  /* Recap — teal */
+  --pr:#7eb8a4;--prb:rgba(126,184,164,.08);
+  /* Part 2 — steel blue / periwinkle */
+  --p2:#9ec4e0;--p2b:rgba(158,196,224,.08);
+  --m4:#9ec4e0;--m5:#b89ed4;--m6:#7eb8a4;
+  /* Low weeks */
+  --lo-bg:#130e0e;--lo-border:#3a1818;--lo-text:#b06060;
+  /* Exercises */
+  --todo-bg-1:#1e1800;--todo-bd-1:#5a4010;--todo-c-1:#c8922e;
+  --hint-bg-1:#0a1510;--hint-bd-1:#1e4030;--hint-c-1:#7eb8a4;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:15px;line-height:1.7;}
+.layout{display:grid;grid-template-columns:265px 1fr;min-height:100vh;}
+
+/* ── SIDEBAR ── */
+.sb{position:sticky;top:0;height:100vh;overflow-y:auto;background:var(--surface);border-right:1px solid var(--border);padding:0;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
+.sb-logo{padding:1.5rem 1.5rem 1.25rem;border-bottom:1px solid var(--border);}
+.sb-logo h1{font-family:'Libre Baskerville',serif;font-size:1rem;line-height:1.35;}
+.sb-logo h1 span{color:var(--p1);}
+.sb-logo p{font-size:.68rem;color:var(--muted);margin-top:.25rem;letter-spacing:.08em;text-transform:uppercase;}
+.prog-wrap{padding:.9rem 1.5rem 1rem;border-bottom:1px solid var(--border);}
+.prog-label{font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);display:flex;justify-content:space-between;margin-bottom:.4rem;}
+.prog-bar{background:var(--border);border-radius:99px;height:3px;}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--p1),var(--pr),var(--p2));border-radius:99px;width:0%;transition:width .5s;}
+.sb-part{padding:.65rem 1.5rem .3rem;font-size:.6rem;text-transform:uppercase;letter-spacing:.15em;color:var(--dim);margin-top:.5rem;display:flex;align-items:center;gap:.5rem;}
+.sb-part::after{content:'';flex:1;height:1px;background:var(--border);}
+.sb-month{font-size:.63rem;text-transform:uppercase;letter-spacing:.1em;color:var(--dim);padding:.35rem 1.5rem .2rem;}
+.ni{display:flex;align-items:center;gap:.55rem;padding:.4rem 1.5rem;cursor:pointer;font-size:.8rem;color:var(--muted);transition:all .15s;border-left:2px solid transparent;}
+.ni:hover{color:var(--text);background:rgba(255,255,255,.03);}
+.ni.active.p1{color:var(--p1);border-left-color:var(--p1);background:var(--p1b);}
+.ni.active.pr{color:var(--pr);border-left-color:var(--pr);background:var(--prb);}
+.ni.active.p2{color:var(--p2);border-left-color:var(--p2);background:var(--p2b);}
+.nd{width:5px;height:5px;border-radius:50%;background:var(--border);flex-shrink:0;transition:background .2s;}
+.ni.done .nd{background:var(--pr);}
+.ni.active .nd{background:currentColor;}
+.wn{font-family:'JetBrains Mono',monospace;font-size:.67rem;opacity:.55;flex-shrink:0;}
+.ni.low .wn::after{content:'↓';font-size:.52rem;color:var(--lo-text);margin-left:.2rem;opacity:1;}
+
+/* ── MAIN ── */
+.main{padding:3rem 3.5rem;max-width:920px;}
+.ph{margin-bottom:3rem;padding-bottom:2.5rem;border-bottom:1px solid var(--border);}
+.ey{font-size:.68rem;text-transform:uppercase;letter-spacing:.15em;color:var(--p1);margin-bottom:.65rem;}
+.ph h2{font-family:'Libre Baskerville',serif;font-size:2.2rem;font-weight:400;line-height:1.2;margin-bottom:.9rem;}
+.ph h2 em{font-style:italic;color:var(--p1);}
+.ph p{color:var(--muted);font-size:.87rem;max-width:560px;}
+.meta-row{display:flex;gap:1.75rem;margin-top:1.4rem;flex-wrap:wrap;}
+.mi{display:flex;flex-direction:column;gap:.1rem;}
+.mi .lb{font-size:.63rem;text-transform:uppercase;letter-spacing:.1em;color:var(--dim);}
+.mi .vl{font-size:.88rem;}
+
+/* overview grid */
+.ov-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem;margin-bottom:2.5rem;}
+.oc{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1.1rem;border-top:3px solid;transition:transform .18s;}
+.oc:hover{transform:translateY(-2px);}
+.oc-mo{font-size:.62rem;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.4rem;}
+.oc-ti{font-family:'Libre Baskerville',serif;font-size:.95rem;margin-bottom:.35rem;line-height:1.3;}
+.oc-de{font-size:.78rem;color:var(--muted);}
+
+/* part divider */
+.part-div{margin:3rem 0 2.5rem;padding:1.5rem 1.75rem;border-radius:10px;border:1px solid var(--border);}
+.part-div.p1-div{border-top:3px solid var(--p1);}
+.part-div.recap-div{border-top:3px solid var(--pr);}
+.part-div.p2-div{border-top:3px solid var(--p2);}
+.pd-label{font-size:.63rem;text-transform:uppercase;letter-spacing:.15em;margin-bottom:.4rem;}
+.p1-div .pd-label{color:var(--p1);}
+.recap-div .pd-label{color:var(--pr);}
+.p2-div .pd-label{color:var(--p2);}
+.pd-title{font-family:'Libre Baskerville',serif;font-size:1.5rem;font-weight:400;margin-bottom:.5rem;}
+.pd-desc{font-size:.83rem;color:var(--muted);line-height:1.55;}
+
+/* month sections */
+.ms{margin-bottom:3rem;}
+.mh{display:flex;align-items:center;gap:.9rem;margin-bottom:1.5rem;padding-bottom:.65rem;border-bottom:1px solid var(--border);}
+.mb{font-size:.63rem;text-transform:uppercase;letter-spacing:.12em;padding:.22rem .7rem;border-radius:99px;border:1px solid;font-family:'JetBrains Mono',monospace;}
+.mb.m1{color:var(--m1);border-color:var(--m1);background:rgba(200,169,110,.08);}
+.mb.m2{color:var(--m2);border-color:var(--m2);background:rgba(212,154,80,.08);}
+.mb.m3{color:var(--m3);border-color:var(--m3);background:rgba(184,126,90,.08);}
+.mb.mr{color:var(--pr);border-color:var(--pr);background:var(--prb);}
+.mb.m4{color:var(--m4);border-color:var(--m4);background:rgba(158,196,224,.08);}
+.mb.m5{color:var(--m5);border-color:var(--m5);background:rgba(184,158,212,.08);}
+.mb.m6{color:var(--m6);border-color:var(--m6);background:rgba(126,184,164,.08);}
+.mt{font-family:'Libre Baskerville',serif;font-size:1.3rem;font-weight:400;}
+
+/* week cards */
+.wc{background:var(--surface);border:1px solid var(--border);border-radius:10px;margin-bottom:.85rem;overflow:hidden;transition:border-color .2s;}
+.wc.done{border-color:rgba(126,184,164,.3);}
+.wc.low{border-style:dashed;border-color:var(--lo-border);}
+.wc.low.done{border-color:rgba(126,184,164,.3);border-style:solid;}
+.wh{display:flex;align-items:center;gap:.9rem;padding:1rem 1.15rem;cursor:pointer;user-select:none;transition:background .15s;}
+.wh:hover{background:rgba(255,255,255,.025);}
+.chk{width:19px;height:19px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;}
+.chk:hover{border-color:var(--pr);}
+.wc.done .chk{background:var(--pr);border-color:var(--pr);}
+.ci{display:none;font-size:9px;color:#000;} .wc.done .ci{display:block;}
+.wnum{font-family:'JetBrains Mono',monospace;font-size:.63rem;color:var(--dim);flex-shrink:0;min-width:46px;}
+.wtw{flex:1;}
+.wt{font-size:.9rem;font-weight:500;line-height:1.3;}
+.wm{font-size:.72rem;color:var(--muted);margin-top:.1rem;}
+.whr{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--dim);flex-shrink:0;}
+.wch{font-size:.68rem;color:var(--dim);transition:transform .22s;flex-shrink:0;}
+.wc.open .wch{transform:rotate(90deg);}
+.wb{display:none;padding:0 1.15rem 1.15rem;border-top:1px solid var(--border);}
+.wc.open .wb{display:block;}
+.lo-badge{font-size:.6rem;text-transform:uppercase;letter-spacing:.1em;padding:.13rem .5rem;border-radius:99px;background:var(--lo-bg);border:1px solid var(--lo-border);color:var(--lo-text);flex-shrink:0;}
+
+/* body content */
+.sl{font-size:.63rem;text-transform:uppercase;letter-spacing:.12em;color:var(--dim);margin:1rem 0 .45rem;}
+ul.il{list-style:none;display:flex;flex-direction:column;gap:.28rem;}
+ul.il li{font-size:.82rem;color:var(--muted);padding-left:.9rem;position:relative;line-height:1.5;}
+ul.il li::before{content:'—';position:absolute;left:0;color:var(--dim);font-size:.68rem;}
+ul.il li strong{color:var(--text);font-weight:500;}
+ul.il li a{color:var(--p1);text-decoration:none;}
+ul.il li a:hover{text-decoration:underline;}
+
+.lo-note{display:flex;gap:.65rem;background:var(--lo-bg);border:1px solid var(--lo-border);border-radius:7px;padding:.8rem 1rem;margin:.65rem 0;font-size:.8rem;color:var(--muted);line-height:1.55;}
+.lo-note strong{color:var(--lo-text);}
+.concept{background:rgba(126,184,164,.05);border-left:3px solid var(--pr);padding:.7rem 1rem;border-radius:0 6px 6px 0;margin:.7rem 0;font-size:.81rem;color:var(--muted);line-height:1.5;}
+.concept strong{color:var(--pr);}
+
+/* exercise blocks */
+.ex{border:1px solid var(--border);border-radius:8px;margin:.75rem 0;overflow:hidden;}
+.exh{display:flex;align-items:center;justify-content:space-between;padding:.5rem .9rem;background:rgba(255,255,255,.02);border-bottom:1px solid var(--border);}
+.ext{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--p1);letter-spacing:.05em;}
+.exa{display:flex;gap:.45rem;align-items:center;}
+.hb{font-size:.63rem;color:var(--pr);cursor:pointer;background:rgba(126,184,164,.08);border:1px solid rgba(126,184,164,.2);border-radius:4px;padding:.18rem .5rem;font-family:'DM Sans',sans-serif;transition:all .15s;}
+.hb:hover{background:rgba(126,184,164,.18);}
+.cb{font-size:.63rem;color:var(--dim);cursor:pointer;background:none;border:none;font-family:'DM Sans',sans-serif;transition:color .15s;}
+.cb:hover{color:var(--text);}
+.exd{padding:.7rem .9rem;background:rgba(200,169,110,.04);border-bottom:1px solid var(--border);font-size:.8rem;color:var(--muted);line-height:1.55;}
+.exd strong{color:var(--p1);font-weight:500;}
+.exd ol{padding-left:1.1rem;margin-top:.3rem;}
+.exd ol li{margin-bottom:.18rem;}
+.exd code,.wb code{font-family:'JetBrains Mono',monospace;font-size:.74rem;color:var(--pr);background:rgba(126,184,164,.08);padding:.08rem .28rem;border-radius:3px;}
+pre{font-family:'JetBrains Mono',monospace;font-size:.75rem;padding:.85rem .9rem;overflow-x:auto;line-height:1.75;color:#aaa;background:var(--code);}
+.kw{color:#c792ea;}.fn{color:#82aaff;}.str{color:#c3e88d;}.cm{color:#4a6270;font-style:italic;}.nm{color:#f78c6c;}.op{color:#89ddff;}.pk{color:#9ec4e0;}
+.td{display:block;background:var(--todo-bg-1);border-left:3px solid var(--todo-bd-1);padding:.28rem .75rem;margin:.12rem 0;border-radius:0 3px 3px 0;color:var(--todo-c-1);font-style:italic;}
+.hp{display:none;padding:.7rem .9rem;background:var(--hint-bg-1);border-top:1px solid var(--hint-bd-1);font-size:.79rem;color:var(--hint-c-1);line-height:1.6;}
+.hp.open{display:block;}
+.hp strong{color:#a0d4c0;} .hp code{font-family:'JetBrains Mono',monospace;font-size:.73rem;background:rgba(126,184,164,.1);padding:.08rem .28rem;border-radius:3px;}
+.dv{background:rgba(200,169,110,.06);border:1px solid rgba(200,169,110,.2);border-radius:6px;padding:.7rem .9rem;margin-top:.9rem;font-size:.8rem;}
+.dv .dl{font-size:.63rem;text-transform:uppercase;letter-spacing:.1em;color:var(--p1);margin-bottom:.28rem;}
+.dv p{color:var(--muted);line-height:1.5;}
+
+/* resources */
+.res{margin-top:3rem;padding-top:2.5rem;border-top:1px solid var(--border);padding-bottom:3rem;}
+.res h3{font-family:'Libre Baskerville',serif;font-size:1.3rem;font-weight:400;margin-bottom:1.5rem;}
+.rg{display:grid;grid-template-columns:1fr 1fr;gap:.85rem;margin-bottom:1.25rem;}
+.rc{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:.9rem 1rem;transition:border-color .2s;}
+.rc:hover{border-color:var(--p1);}
+.rct{font-size:.63rem;text-transform:uppercase;letter-spacing:.1em;color:var(--dim);margin-bottom:.3rem;}
+.rcn{font-size:.86rem;font-weight:500;margin-bottom:.18rem;}
+.rcn a{color:var(--p1);text-decoration:none;} .rcn a:hover{text-decoration:underline;}
+.rcd{font-size:.77rem;color:var(--muted);line-height:1.4;}
+.tag{display:inline-block;margin-top:.35rem;margin-right:.2rem;font-size:.6rem;text-transform:uppercase;letter-spacing:.08em;padding:.12rem .45rem;border-radius:99px;border:1px solid;}
+.tf{color:var(--pr);border-color:rgba(126,184,164,.3);}.tc{color:var(--p1);border-color:rgba(200,169,110,.3);}.tr{color:var(--dim);border-color:var(--border);}.tp{color:var(--m5);border-color:rgba(184,158,212,.3);}.tts{color:#e0b96e;border-color:rgba(224,185,110,.3);}
+table.st{width:100%;border-collapse:collapse;margin-top:1rem;font-size:.78rem;}
+table.st th{text-align:left;padding:.45rem .7rem;font-size:.63rem;text-transform:uppercase;letter-spacing:.1em;color:var(--dim);border-bottom:1px solid var(--border);font-weight:400;}
+table.st td{padding:.5rem .7rem;border-bottom:1px solid rgba(42,42,42,.5);color:var(--muted);vertical-align:top;}
+table.st td:first-child{color:var(--text);font-weight:500;}
+table.st td code{font-family:'JetBrains Mono',monospace;font-size:.71rem;color:var(--pr);background:rgba(126,184,164,.08);padding:.08rem .28rem;border-radius:3px;}
+
+::-webkit-scrollbar{width:5px;height:5px;}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+.toast{position:fixed;bottom:1.4rem;right:1.4rem;background:var(--s2);border:1px solid var(--border);border-radius:6px;padding:.55rem .9rem;font-size:.76rem;color:var(--muted);opacity:0;transform:translateY(8px);transition:all .22s;pointer-events:none;z-index:100;}
+.toast.show{opacity:1;transform:translateY(0);}
+@media(max-width:860px){.layout{grid-template-columns:1fr;}.sb{display:none;}.main{padding:1.75rem 1.25rem;}.ov-grid,.rg{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="layout">
+
+<!-- ═══════════════ SIDEBAR ═══════════════ -->
+<nav class="sb">
+  <div class="sb-logo">
+    <h1>Econometrics<br><span>Full Learning Plan</span></h1>
+    <p>30 Weeks · R + Quarto</p>
+  </div>
+  <div class="prog-wrap">
+    <div class="prog-label"><span>Overall Progress</span><span id="pp">0 / 30</span></div>
+    <div class="prog-bar"><div class="prog-fill" id="pf"></div></div>
+  </div>
+
+  <div class="sb-part">Part 1 — Foundations</div>
+  <div class="sb-month">Identification Mindset</div>
+  <div class="ni p1" data-w="1" onclick="sw(1)"><div class="nd"></div><span class="wn">W01</span>Setup &amp; OLS Reframing</div>
+  <div class="ni p1" data-w="2" onclick="sw(2)"><div class="nd"></div><span class="wn">W02</span>Endogeneity &amp; DAGs</div>
+  <div class="ni p1" data-w="3" onclick="sw(3)"><div class="nd"></div><span class="wn">W03</span>Robust Inference &amp; FE</div>
+  <div class="ni p1" data-w="4" onclick="sw(4)"><div class="nd"></div><span class="wn">W04</span>Panel Data</div>
+  <div class="ni p1 low" data-w="5" onclick="sw(5)"><div class="nd"></div><span class="wn">W05</span>Catch-up &amp; Workflow</div>
+  <div class="sb-month">Causal Toolkit</div>
+  <div class="ni p1" data-w="6" onclick="sw(6)"><div class="nd"></div><span class="wn">W06</span>IV Theory</div>
+  <div class="ni p1" data-w="7" onclick="sw(7)"><div class="nd"></div><span class="wn">W07</span>IV Implementation</div>
+  <div class="ni p1" data-w="8" onclick="sw(8)"><div class="nd"></div><span class="wn">W08</span>DiD Classic &amp; Event Study</div>
+  <div class="ni p1" data-w="9" onclick="sw(9)"><div class="nd"></div><span class="wn">W09</span>Staggered DiD</div>
+  <div class="ni p1" data-w="10" onclick="sw(10)"><div class="nd"></div><span class="wn">W10</span>RDD</div>
+  <div class="ni p1 low" data-w="11" onclick="sw(11)"><div class="nd"></div><span class="wn">W11</span>Catch-up &amp; Review</div>
+  <div class="sb-month">Modern Methods</div>
+  <div class="ni p1" data-w="12" onclick="sw(12)"><div class="nd"></div><span class="wn">W12</span>Matching &amp; Synth Control</div>
+  <div class="ni p1" data-w="13" onclick="sw(13)"><div class="nd"></div><span class="wn">W13</span>Double ML</div>
+  <div class="ni p1" data-w="14" onclick="sw(14)"><div class="nd"></div><span class="wn">W14</span>Replication Project</div>
+  <div class="ni p1" data-w="15" onclick="sw(15)"><div class="nd"></div><span class="wn">W15</span>Consolidation</div>
+
+  <div class="sb-part">Recap &amp; Bridge</div>
+  <div class="ni pr low" data-w="16" onclick="sw(16)"><div class="nd"></div><span class="wn">W16</span>Portfolio Review</div>
+  <div class="ni pr" data-w="17" onclick="sw(17)"><div class="nd"></div><span class="wn">W17</span>Bridge to Time Series</div>
+
+  <div class="sb-part">Part 2 — Advanced</div>
+  <div class="sb-month">Time Series</div>
+  <div class="ni p2" data-w="18" onclick="sw(18)"><div class="nd"></div><span class="wn">W18</span>ARMA &amp; Stationarity</div>
+  <div class="ni p2" data-w="19" onclick="sw(19)"><div class="nd"></div><span class="wn">W19</span>Unit Roots &amp; Spurious Reg.</div>
+  <div class="ni p2 low" data-w="20" onclick="sw(20)"><div class="nd"></div><span class="wn">W20</span>Cointegration &amp; ECM</div>
+  <div class="ni p2" data-w="21" onclick="sw(21)"><div class="nd"></div><span class="wn">W21</span>VAR &amp; IRFs</div>
+  <div class="ni p2 low" data-w="22" onclick="sw(22)"><div class="nd"></div><span class="wn">W22</span>TS Catch-up</div>
+  <div class="sb-month">Advanced Causal</div>
+  <div class="ni p2" data-w="23" onclick="sw(23)"><div class="nd"></div><span class="wn">W23</span>Causal Forests &amp; HTE</div>
+  <div class="ni p2" data-w="24" onclick="sw(24)"><div class="nd"></div><span class="wn">W24</span>Shift-Share IV</div>
+  <div class="ni p2" data-w="25" onclick="sw(25)"><div class="nd"></div><span class="wn">W25</span>Synthetic DiD</div>
+  <div class="ni p2" data-w="26" onclick="sw(26)"><div class="nd"></div><span class="wn">W26</span>Regression Kink</div>
+  <div class="sb-month">Structural + Capstone</div>
+  <div class="ni p2" data-w="27" onclick="sw(27)"><div class="nd"></div><span class="wn">W27</span>SVAR &amp; Local Projections</div>
+  <div class="ni p2" data-w="28" onclick="sw(28)"><div class="nd"></div><span class="wn">W28</span>Forecasting with fable</div>
+  <div class="ni p2 low" data-w="29" onclick="sw(29)"><div class="nd"></div><span class="wn">W29</span>Quantile Regression</div>
+  <div class="ni p2" data-w="30" onclick="sw(30)"><div class="nd"></div><span class="wn">W30</span>Capstone Project</div>
+</nav>
+
+<!-- ═══════════════ MAIN ═══════════════ -->
+<main class="main">
+
+<div class="ph">
+  <div class="ey">Niko · LMU Munich · Statistics BSc</div>
+  <h2>Econometrics —<br><em>Full Learning Plan</em></h2>
+  <p>30 weeks of structured R-focused econometrics. Two parts, a two-week bridge, and six low-intensity catch-up weeks built into the schedule. Code exercises are stubs: you fill in the logic, hints available on demand.</p>
+  <div class="meta-row">
+    <div class="mi"><span class="lb">Total weeks</span><span class="vl">30</span></div>
+    <div class="mi"><span class="lb">Avg load</span><span class="vl">2–6h (≈4h)</span></div>
+    <div class="mi"><span class="lb">Light weeks</span><span class="vl">W5, W11, W16, W20, W22, W29</span></div>
+    <div class="mi"><span class="lb">Stack</span><span class="vl">R + Quarto + GitHub</span></div>
+  </div>
+</div>
+
+<!-- overview -->
+<div class="ov-grid">
+  <div class="oc" style="border-top-color:var(--p1)"><div class="oc-mo" style="color:var(--p1)">Part 1 · W1–15</div><div class="oc-ti">Foundations &amp; Causal Toolkit</div><div class="oc-de">OLS, FE, IV, DiD, RDD, DoubleML. Two catch-up weeks built in.</div></div>
+  <div class="oc" style="border-top-color:var(--pr)"><div class="oc-mo" style="color:var(--pr)">Recap · W16–17</div><div class="oc-ti">Portfolio Review &amp; Bridge</div><div class="oc-de">Consolidate Part 1. One light week, one reading week introducing time series.</div></div>
+  <div class="oc" style="border-top-color:var(--p2)"><div class="oc-mo" style="color:var(--p2)">Part 2 · W18–30</div><div class="oc-ti">Time Series + Advanced Methods</div><div class="oc-de">ARMA, unit roots, VAR, causal forests, SDiD, SVAR. Capstone in W30.</div></div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PART 1
+══════════════════════════════════════ -->
+<div class="part-div p1-div">
+  <div class="pd-label">Part 1 · Weeks 1–15</div>
+  <div class="pd-title">Foundations &amp; Causal Toolkit</div>
+  <div class="pd-desc">Build econometric intuition from a statistics background. Master OLS, panel FE, IV, DiD, RDD, and Double ML — all implemented in R with <code>fixest</code> and Quarto. Two deliberate catch-up weeks at W5 and W11.</div>
+</div>
+
+<!-- ── MONTH 1 ── -->
+<div class="ms">
+<div class="mh"><span class="mb m1">Month 1</span><span class="mt">Identification Mindset</span></div>
+
+<!-- W1 -->
+<div class="wc" id="week-1">
+  <div class="wh" onclick="tw(1)">
+    <div class="chk" onclick="td(event,1)"><span class="ci">✓</span></div>
+    <span class="wnum">Week 01</span>
+    <div class="wtw"><div class="wt">Setup, Workflow &amp; OLS Reframing</div><div class="wm">Wooldridge Ch. 1–3 · Hanck et al. Ch. 1–4 · Hansen Ch. 1–2</div></div>
+    <span class="whr">~4h</span><span class="wch">▶</span>
+  </div>
+  <div class="wb">
+    <div class="sl">Reading</div>
+    <ul class="il">
+      <li><strong>Wooldridge</strong> Ch. 1–3 — focus on the <em>ceteris paribus</em> interpretation and zero conditional mean. This framing differs from your stats courses.</li>
+      <li><strong>Hanck et al.</strong> Ch. 1–4 (<a href="https://www.econometrics-with-r.org" target="_blank">econometrics-with-r.org</a>) — free R companion to Wooldridge.</li>
+      <li><strong>Hansen</strong> Ch. 1–2 — skim for notation differences from your stats background.</li>
+    </ul>
+    <div class="sl">Exercises</div>
+    <div class="ex">
+      <div class="exh"><span class="ext">Ex 1.1 — OLS three ways</span><div class="exa"><button class="hb" onclick="th(this)">hint</button><button class="cb" onclick="cc(this)">copy</button></div></div>
+      <div class="exd"><strong>Goal:</strong> Confirm that <code>lm()</code>, <code>feols()</code>, and manual <em>(X'X)⁻¹X'y</em> give identical coefficients on <code>wage1</code>. Then compare IID, HC1, and hetero SEs in one <code>etable()</code>.</div>
+      <pre><span class="kw">library</span>(<span class="pk">fixest</span>); <span class="kw">library</span>(<span class="pk">wooldridge</span>); <span class="kw">library</span>(<span class="pk">modelsummary</span>)
+<span class="fn">data</span>(<span class="str">"wage1"</span>)
+<span class="td"># m_lm &lt;- ???
+# m_fe &lt;- ???
+# X    &lt;- model.matrix(wage ~ educ + exper + tenure, wage1)
+# beta &lt;- ???   # (X'X)^-1 X'y using solve(), t(), %*%
+# print(beta)   # must match coef(m_lm)</span>
+<span class="td"># etable(feols(..., vcov="iid"), feols(..., vcov="HC1"), feols(..., vcov="hetero"),
+#        headers = c("IID","HC1","Hetero"))</span></pre>
+      <div class="hp"><strong>Matrix formula:</strong> <code>solve(t(X) %*% X) %*% t(X) %*% wage1$wage</code>. vcov options: <code>"iid"</code>, <code>"HC1"</code>, <code>"hetero"</code>.</div>
+    </div>
+    <div class="ex">
+      <div class="exh"><span class="ext">Ex 1.2 — Quarto project setup</span><div class="exa"><button class="hb" onclick="th(this)">hint</button></div></div>
+      <div class="exd"><strong>Goal:</strong> Initialise a Quarto project for all 30 weeks. Configure YAML with <code>code-fold: true</code> and <code>toc: true</code>. Render W1 to HTML.</div>
+      <pre><span class="td"># Terminal: quarto create project default econometrics
+# week1.qmd YAML: title, format: html: code-fold: true, toc: true
+# quarto render week1.qmd</span></pre>
+      <div class="hp"><code>code-fold: true</code> and <code>toc: true</code> go under <code>format: html:</code> in the YAML header.</div>
+    </div>
+    <div class="dv"><div class="dl">Deliverable</div><p><code>week1.qmd</code>: OLS three-ways confirming identical betas, SE comparison table with written interpretation, residuals vs. fitted plot.</p></div>
+  </div>
+</div>
+
+<!-- W2 -->
+<div class="wc" id="week-2">
+  <div class="wh" onclick="tw(2)">
+    <div class="chk" onclick="td(event,2)"><span class="ci">✓</span></div>
+    <span class="wnum">Week 02</span>
+    <div class="wtw"><div class="wt">Endogeneity, Potential Outcomes &amp; DAGs</div><div class="wm">MHE Ch. 1–2 · The Effect Ch. 5–6 · Wooldridge Ch. 3.3</div></div>
+    <span class="whr">~4h</span><span class="wch">▶</span>
+  </div>
+  <div class="wb">
+    <div class="sl">Reading</div>
+    <ul class="il">
+      <li><strong>MHE</strong> Ch. 1–2 — the most important reading of Part 1. Regression-anatomy and the OVB formula are the backbone of everything that follows.</li>
+      <li><strong>The Effect</strong> Ch. 5–6 (<a href="https://theeffectbook.net" target="_blank">theeffectbook.net</a>) — DAG framing. Read after MHE.</li>
+      <li><strong>Wooldridge</strong> Ch. 3.3–3.4 — OVB from a third angle.</li>
+    </ul>
+    <div class="concept"><strong>Before coding:</strong> Derive the OVB formula on paper — bias = γ₁ × δ₁. Then verify numerically.</div>
+    <div class="sl">Exercises</div>
+    <div class="ex">
+      <div class="exh"><span class="ext">Ex 2.1 — Simulate OVB and verify the formula</span><div class="exa"><button class="hb" onclick="th(this)">hint</button><button class="cb" onclick="cc(this)">copy</button></div></div>
+      <div class="exd"><strong>Goal:</strong> DGP: <code>y = 1 + 2·x + 3·ability + ε</code>, <code>x = 0.7·ability + noise</code>. Show that short regression bias equals γ₁ × δ₁ from the OVB formula numerically.
+        <ol><li>Fit short, long, and auxiliary regressions.</li><li>Confirm: <code>coef_short - coef_long == coef_ability_long * coef_x_in_aux</code>.</li></ol></div>
+      <pre><span class="fn">set.seed</span>(<span class="nm">42</span>); n <span class="op">&lt;-</span> <span class="nm">2000</span>
+<span class="td"># ability &lt;- rnorm(n)
+# x       &lt;- 0.7 * ability + rnorm(n)
+# y       &lt;- 1 + 2*x + 3*ability + rnorm(n)
+# short &lt;- feols(???); long &lt;- feols(???); aux &lt;- feols(ability ~ x, ...)
+# ovb &lt;- coef(long)["ability"] * coef(aux)["x"]
+# cat("Observed bias:", coef(short)["x"] - coef(long)["x"])
+# cat("OVB formula:  ", ovb)</span></pre>
+      <div class="hp">γ₁ = <code>coef(long)["ability"]</code>, δ₁ = <code>coef(aux)["x"]</code>. Bias ≈ 3 × 0.7 = 2.1.</div>
+    </div>
+    <div class="ex">
+      <div class="exh"><span class="ext">Ex 2.2 — Draw the DAG and find adjustment sets</span><div class="exa"><button class="hb" onclick="th(this)">hint</button><button class="cb" onclick="cc(this)">copy</button></div></div>
+      <div class="exd"><strong>Goal:</strong> Encode the DGP as a DAG with <code>dagify()</code>. Visualise with <code>ggdag_adjustment_set()</code>. List all backdoor paths with <code>dagitty::paths()</code>.</div>
+      <pre><span class="kw">library</span>(<span class="pk">ggdag</span>); <span class="kw">library</span>(<span class="pk">dagitty</span>)
+<span class="td"># dag &lt;- dagify(y ~ x + ability, x ~ ability,
+#               exposure="x", outcome="y", labels=c(...))
+# ggdag_adjustment_set(dag, use_labels="label", text=FALSE) + theme_dag()
+# dagitty::paths(dag)</span></pre>
+      <div class="hp">Backdoor path: x ← ability → y. Blocking it requires conditioning on ability.</div>
+    </div>
+    <div class="dv"><div class="dl">Deliverable</div><p><code>week2.qmd</code>: OVB simulation with formula verification, rendered DAG, paragraph on sign conditions for over/under-estimation.</p></div>
+  </div>
+</div>
+
+<!-- W3 -->
+<div class="wc" id="week-3">
+  <div class="wh" onclick="tw(3)">
+    <div class="chk" onclick="td(event,3)"><span class="ci">✓</span></div>
+    <span class="wnum">Week 03</span>
+    <div class="wtw"><div class="wt">Robust Inference &amp; Two-Way Fixed Effects</div><div class="wm">Hansen Ch. 4–6 · Abadie et al. (2017) · fixest deep-dive</div></div>
+    <span class="whr">~4h</span><span class="wch">▶</span>
+  </div>
+  <div class="wb">
+    <div class="sl">Reading</div>
+    <ul class="il">
+      <li><strong>Hansen</strong> Ch. 4–6 — heteroskedasticity, sandwich estimators, HC2/HC3 finite-sample corrections.</li>
+      <li><strong>Abadie et al. (2017)</strong> "When Should You Adjust SEs for Clustering?" — 10 pages. Read before reflexively clustering.</li>
+    </ul>
+    <div class="sl">Exercises</div>
+    <div class="ex">
+      <div class="exh"><span class="ext">Ex 3.1 — SE comparison on crime4</span><div class="exa"><button class="hb" onclick="th(this)">hint</button><button class="cb" onclick="cc(this)">copy</button></div></div>
+      <div class="exd"><strong>Goal:</strong> Fit <code>crmrte ~ polpc + density + taxpc</code> with IID, HC1, and county-clustered SEs. Identify which coefficients change significance and write a justification for your SE choice.</div>
+      <pre><span class="kw">library</span>(<span class="pk">wooldridge</span>); <span class="fn">data</span>(<span class="str">"crime4"</span>)
+<span class="td"># etable(feols(..., vcov="iid"), feols(..., vcov="HC1"),
+#        feols(..., vcov=~county), headers=c("IID","HC1","Clustered"))</span></pre>
+      <div class="hp">Cluster syntax: <code>vcov = ~county</code>. Note which SEs grow — that's evidence of within-county residual correlation.</div>
+    </div>
+    <div class="ex">
+      <div class="exh"><span class="ext">Ex 3.2 — Prove FE = manual within-transformation</span><div class="exa"><button class="hb" onclick="th(this)">hint</button><button class="cb" onclick="cc(this)">copy</button></div></div>
+      <div class="exd"><strong>Goal:</strong> Group-demean all variables by county. Run OLS on demeaned data. Show coefficients are identical to <code>feols(... | county)</code>.</div>
+      <pre><span class="td"># crime4_dm &lt;- crime4 |&gt; group_by(county) |&gt;
+#   mutate(across(c(crmrte,polpc,density,taxpc), ~ . - mean(.)))
+# m_within &lt;- feols(crmrte ~ polpc + density + taxpc, crime4_dm)
+# m_fe     &lt;- feols(crmrte ~ polpc + density + taxpc | county, crime4, vcov=~county)
+# etable(m_fe, m_within)</span></pre>
+      <div class="hp">Demeaning: <code>~ . - mean(.)</code>. After demeaning, OLS on the demeaned data is the within estimator — coefficients must match exactly.</div>
+    </div>
+    <div class="dv"><div class="dl">Deliverable</div><p><code>week3.qmd</code>: SE comparison table with clustering justification; within-transformation proof showing identical betas.</p></div>
+  </div>
+</div>
+
+<!-- W4 -->
+<div class="wc" id="week-4">
+  <div class="wh" onclick="tw(4)">
+    <div class="chk" onclick="td(event,4)"><span class="ci">✓</span></div>
+    <span class="wnum">Week 04</span>
+    <div class="wtw"><div class="wt">Panel Data — FE vs. RE vs. FD</div><div class="wm">Wooldridge Ch. 13–14 · MHE Ch. 5 intro · plm</div></div>
+    <span class="whr">~5h</span><span class="wch">▶</span>
+  </div>
+  <div class="wb">
+    <div class="sl">Reading</div>
+    <ul class="il">
+      <li><strong>Wooldridge</strong> Ch. 13–14 — pooled OLS, RE, FE, FD. Focus on when each is consistent, not just how to compute.</li>
+      <li><strong>MHE</strong> Ch. 5.1–5.2 — FE as the within estimator.</li>
+    </ul>
+    <div class="sl">Exercises</div>
+    <div class="ex">
+      <div class="exh"><span class="ext">Ex 4.1 — Four estimators + Hausman test on jtrain</span><div class="exa"><button class="hb" onclick="th(this)">hint</button><button class="cb" onclick="cc(this)">copy</button></div></div>
+      <div class="exd"><strong>Goal:</strong> Fit pooled OLS, RE, FE, FD for <code>lscrap ~ hrsemp + lsales + lemploy</code>. Run <code>phtest()</code>. Write up estimator choice.
+        <ol><li>Create <code>pdata.frame</code> indexed by <code>fcode</code> and <code>year</code>.</li><li>Reject H0 of Hausman → FE required.</li></ol></div>
+      <pre><span class="kw">library</span>(<span class="pk">plm</span>); <span class="fn">data</span>(<span class="str">"jtrain"</span>, package=<span class="str">"wooldridge"</span>)
+<span class="td"># pdata  &lt;- pdata.frame(jtrain, index=c("fcode","year"))
+# m_pool &lt;- plm(lscrap ~ ..., pdata, model="pooling")
+# m_re   &lt;- plm(lscrap ~ ..., pdata, model="random")
+# m_fe   &lt;- feols(lscrap ~ ... | fcode, jtrain, vcov=~fcode)
+# m_fd   &lt;- plm(lscrap ~ ..., pdata, model="fd")
+# phtest(plm(lscrap ~ ..., pdata, model="within"), m_re)</span></pre>
+      <div class="hp"><code>phtest()</code> needs two <code>plm</code> objects. Reject H0 (p &lt; 0.05) → RE inconsistent → use FE.</div>
+    </div>
+    <div class="dv"><div class="dl">Deliverable</div><p><code>week4.qmd</code>: Four-estimator table, Hausman test output, 1-page justification of estimator choice.</p></div>
+  </div>
+</div>
+
+<!-- W5 LOW -->
+<div class="wc low" id="week-5">
+  <div class="wh" onclick="tw(5)">
+    <div class="chk" onclick="td(event,5)"><span class="ci">✓</span></div>
+    <span class="wnum">Week 05</span>
+    <div class="wtw"><div class="wt">Catch-up &amp; Workflow Polish</div><div class="wm">Review W1–4 · modelsummary · GitHub setup</div></div>
+    <span class="lo-badge">low intensity</span>
+    <span class="whr">~2h</span><span class="wch">▶</span>
+  </div>
+  <div class="wb">
+    <div class="lo-note"><strong>↓ Low-intensity week.</strong> If you're behind on W1–4, catch up here — that's the intended use. If current, spend the 2h on the tasks below.</div>
+    <div class="sl">If current — polish and publish</div>
+    <ul class="il">
+      <li>Push weeks 1–4 to a GitHub repo. Set up GitHub Pages if you haven't (Settings → Pages → Branch: main). Confirm the HTML renders.</li>
+      <li>Learn <code>modelsummary::datasummary_skim()</code> and <code>datasummary_crosstab()</code> — summary stats tables you'll use throughout.</li>
+      <li>Spend 20 min with the <code>fixest</code> cheatsheet — especially <code>i()</code> interactions, <code>sw()</code> stepwise formulas, and <code>split</code> arguments. These come up in W8–9.</li>
+    </ul>
+  </div>
+</div>
+</div><!-- end month 1 -->
+
+<!-- ── MONTH 2 ── -->
+<div class="ms">
+<div class="mh"><span class="mb m2">Month 2</span><span class="mt">Causal Toolkit</span></div>
+
+<!-- W6 -->
+<div class="wc" id="week-6">
+  <div class="wh" onclick="tw(6)">
+    <div class="chk" onclick="td(event,6)"><span class="ci">✓</span></div>
+    <span class="wnum">Week 06</span>
+    <div class="wtw"><div class="wt">Instrumental Variables — Theory</div><div class="wm">MHE Ch. 4 · The Effect Ch. 19 · Mixtape IV · Bound et al. (1995)</div></div>
+    <span class="whr">~4h</span><span class="wch">▶</span>
+  </div>
+  <div class="wb">
+    <div class="sl">Reading</div>
+    <ul class="il">
+      <li><strong>MHE</strong> Ch. 4 — IV and LATE. Read the LATE section twice. Understand what population the IV estimate identifies.</li>
+      <li><strong>The Effect</strong> Ch. 19 — DAG framing. Draw it yourself: Z → D → Y, no Z → Y arrow.</li>
+      <li><strong>Bound, Jaeger &amp; Baker (1995)</strong> — weak instruments. Short, crucial for understanding why first-stage F matters.</li>
+    </ul>
+    <div class="concept"><strong>On paper first:</strong> Write the three IV assumptions (relevance, exclusion, monotonicity). For each, give a one-sentence example of what violates it in the Angrist-Krueger setting. Then explain what LATE identifies vs. ATE.</div>
+  </div>
+</div>
+
+<!-- W7 -->
+<div class="wc" id="week-7">
+  <div class="wh" onclick="tw(7)">
+    <div class="chk" onclick="td(event,7)"><span class="ci">✓</span></div>
+    <span class="wnum">Week 07</span>
+    <div class="wtw"><div class="wt">IV — Full Implementation &amp; Diagnostics</div><div class="wm">Angrist &amp; Krueger (1991) · fixest IV syntax</div></div>
+    <span class="whr">~5h</span><span class="wch">▶</span>
+  </div>
+  <div class="wb">
+    <div class="sl">Reading</div>
+    <ul class="il"><li><strong>Angrist &amp; Krueger (1991)</strong> — read the paper. Focus on the IV setup and the tables you will replicate.</li></ul>
+    <div class="sl">Exercises</div>
+    <div class="ex">
+      <div class="exh"><span class="ext">Ex 7.1 — Manual 2SLS then verify with fixest</span><div class="exa"><button class="hb" onclick="th(this)">hint</button><button class="cb" onclick="cc(this)">copy</button></div></div>
+      <div class="exd"><strong>Goal:</strong> Stage 1: <code>educ ~ qob</code>. Stage 2: <code>lnwage ~ educ_hat</code>. Replicate with <code>feols()</code>. Betas must match; SEs differ — explain why. Check first-stage F.</div>
+      <pre><span class="kw">library</span>(<span class="pk">causaldata</span>); <span class="fn">data</span>(<span class="str">"angrist_krueger"</span>, package=<span class="str">"causaldata"</span>)
+<span class="td"># stage1   &lt;- feols(educ ~ qob, angrist_krueger)
+# educ_hat &lt;- fitted(stage1)
+# stage2   &lt;- feols(lnwage ~ educ_hat, angrist_krueger)
+# m_iv     &lt;- feols(lnwage ~ 1 | 0 | educ ~ qob, angrist_krueger)
+# cat("Manual:", coef(stage2)["educ_hat"], " fixest:", coef(m_iv)["educ"])
+# summary(m_iv, stage=1)   # first-stage F
+# etable(feols(lnwage ~ educ, angrist_krueger), m_iv, headers=c("OLS","IV"))</span></pre>
+      <div class="hp">fixest IV syntax: <code>y ~ exog | FE | endog ~ instrument</code>. No controls/FE: <code>lnwage ~ 1 | 0 | educ ~ qob</code>. Manual stage-2 SEs are wrong because they ignore first-stage uncertainty.</div>
+    </div>
+    <div class="dv"><div class="dl">Deliverable</div><p><code>week7.qmd</code>: Beta comparison, first-stage F, OLS vs. IV table, paragraph on why SEs differ and what LATE identifies here.</p></div>
+  </div>
+</div>
+
+<!-- W8 -->
+<div class="wc" id="week-8">
+  <div class="wh" onclick="tw(8)">
+    <div class="chk" onclick="td(event,8)"><span class="ci">✓</span></div>
+    <span class="wnum">Week 08</span>
+    <div class="wtw"><div class="wt">Difference-in-Differences — Classic &amp; Event Study</div><div class="wm">MHE Ch. 5 · Card &amp; Krueger (1994) · The Effect Ch. 18</div></div>
+    <span class="whr">~5h</span><span class="wch">▶</span>
+  </div>
+  <div class="wb">
+    <div class="sl">Reading</div>
+    <ul class="il">
+      <li><strong>Card &amp; Krueger (1994)</strong> — read the paper before touching code.</li>
+      <li><strong>MHE</strong> Ch. 5 — parallel trends, TWFE.</li>
+      <li><strong>The Effect</strong> Ch. 18 — DAG framing of parallel trends.</li>
+    </ul>
+    <div class="sl">Exercises</div>
+    <div class="ex">
+      <div class="exh"><span class="ext">Ex 8.1 — DiD three ways: cell means, regression, TWFE</span><div class="exa"><button class="hb" onclick="th(this)">hint</button><button class="cb" onclick="cc(this)">copy</button></div></div>
+      <div class="exd"><strong>Goal:</strong> Compute the DiD three ways on <code>card_krueger</code> and confirm all give the same number. (1) Cell means formula. (2) <code>fte ~ nj * after</code>. (3) TWFE with restaurant + period FE.</div>
+      <pre><span class="fn">data</span>(<span class="str">"card_krueger"</span>, package=<span class="str">"causaldata"</span>)
+<span class="td"># means &lt;- card_krueger |&gt; group_by(nj, after) |&gt; summarise(emp=mean(fte,na.rm=T))
+# did_manual &lt;- (NJ_post - NJ_pre) - (PA_post - PA_pre)   # fill in
+# m_did  &lt;- feols(fte ~ nj * after, card_krueger, vcov=~sheet)
+# m_twfe &lt;- feols(fte ~ i(after,nj) | sheet + after, card_krueger, vcov=~sheet)
+# cat(did_manual, coef(m_did)["nj:after"])</span></pre>
+      <div class="hp">Index means with <code>with(means, emp[nj==1 &amp; after==1])</code> etc. The <code>nj:after</code> interaction in the regression equals the manual DiD.</div>
+    </div>
+    <div class="ex">
+      <div class="exh"><span class="ext">Ex 8.2 — Event study plot and pre-trend test</span><div class="exa"><button class="hb" onclick="th(this)">hint</button><button class="cb" onclick="cc(this)">copy</button></div></div>
+      <div class="exd"><strong>Goal:</strong> Using <code>mpdta</code> from <code>did</code>, fit an event study with <code>i(rel_year, treat, ref=-1)</code>. Plot with <code>iplot()</code>. Wald test pre-period coefficients jointly = 0.</div>
+      <pre><span class="kw">library</span>(<span class="pk">did</span>); <span class="fn">data</span>(<span class="str">"mpdta"</span>)
+<span class="td"># mpdta$rel_year &lt;- mpdta$year - mpdta$first.treat
+# m_es &lt;- feols(lemp ~ i(rel_year, treat, ref=-1) | countyreal + year,
+#               mpdta, vcov=~countyreal)
+# iplot(m_es)
+# wald(m_es, grep("rel_year::-[2-9]", names(coef(m_es)), value=TRUE))</span></pre>
+      <div class="hp">For never-treated (<code>first.treat==0</code>), <code>rel_year</code> will be very negative — exclude or cap. Pre-trend Wald: <code>grep</code> extracts the pre-period coefficient names.</div>
+    </div>
+    <div class="dv"><div class="dl">Deliverable</div><p><code>week8.qmd</code>: Three-way DiD confirmation, event study plot, paragraph on parallel trends and whether the pre-trend test supports it.</p></div>
+  </div>
+</div>
+
+<!-- W9 -->
+<div class="wc" id="week-9">
+  <div class="wh" onclick="tw(9)">
+    <div class="chk" onclick="td(event,9)"><span class="ci">✓</span></div>
+    <span class="wnum">Week 09</span>
+    <div class="wtw"><div class="wt">Staggered DiD — TWFE Bias &amp; Callaway-Sant'Anna</div><div class="wm">Baker et al. (2022) · Callaway &amp; Sant'Anna (2021) · did</div></div>
+    <span class="whr">~5h</span><span class="wch">▶</span>
+  </div>
+  <div class="wb">
+    <div class="sl">Reading</div>
+    <ul class="il">
+      <li><strong>Baker et al. (2022)</strong> — 10 pages. Read first. Shows TWFE problem concretely.</li>
+      <li><strong>Callaway &amp; Sant'Anna (2021)</strong> — Sections 1–3. Focus on the group-time ATT concept.</li>
+    </ul>
+    <div class="sl">Exercises</div>
+    <div class="ex">
+      <div class="exh"><span class="ext">Ex 9.1 — Simulate TWFE bias; fix with C&amp;S</span><div class="exa"><button class="hb" onclick="th(this)">hint</button><button class="cb" onclick="cc(this)">copy</button></div></div>
+      <div class="exd"><strong>Goal:</strong> Simulate staggered rollout with growing treatment effects. Show TWFE underestimates true ATT. Show C&amp;S recovers it.
+        <ol><li>200 units × 10 periods. Cohorts: treated in 3, 6, 9, or never. True effect = <code>(time-cohort+1)*0.5*treated</code>.</li><li>Compare TWFE estimate to true ATT and C&amp;S <code>aggte(type="simple")</code>.</li></ol></div>
+      <pre><span class="fn">set.seed</span>(<span class="nm">123</span>)
+<span class="td"># sim_df &lt;- expand.grid(unit=1:200, time=1:10) |&gt; as_tibble() |&gt;
+#   group_by(unit) |&gt;
+#   mutate(cohort=sample(c(3,6,9,Inf),1), treat=as.numeric(time>=cohort),
+#          true_eff=if_else(is.infinite(cohort),0,(time-cohort+1)*treat*0.5),
+#          y=unit+time+true_eff+rnorm(n())) |&gt; ungroup()
+# twfe &lt;- feols(y ~ treat | unit + time, filter(sim_df, !is.infinite(cohort)), vcov=~unit)
+# cs   &lt;- att_gt(yname="y", tname="time", idname="unit",
+#                gname="cohort_int",   # cohort column with 0 for never-treated
+#                data=mutate(sim_df, cohort_int=if_else(is.infinite(cohort),0L,as.integer(cohort))))
+# aggte(cs, type="simple"); ggdid(cs)</span></pre>
+      <div class="hp">Never-treated must have <code>cohort = 0L</code> for <code>att_gt()</code>. TWFE uses already-treated units as controls (the "forbidden comparison"), biasing estimates when effects are heterogeneous across cohorts.</div>
+    </div>
+    <div class="dv"><div class="dl">Deliverable</div><p><code>week9.qmd</code>: TWFE vs. C&amp;S comparison, group-time ATT plot, written answer: "Under what DGP does TWFE recover the correct ATT?"</p></div>
+  </div>
+</div>
+
+<!-- W10 -->
+<div class="wc" id="week-10">
+  <div class="wh" onclick="tw(10)">
+    <div class="chk" onclick="td(event,10)"><span class="ci">✓</span></div>
+    <span class="wnum">Week 10</span>
+    <div class="wtw"><div class="wt">Regression Discontinuity Design</div><div class="wm">MHE Ch. 6 · Cattaneo et al. · rdrobust</div></div>
+    <span class="whr">~5h</span><span class="wch">▶</span>
+  </div>
+  <div class="wb">
+    <div class="sl">Reading</div>
+    <ul class="il">
+      <li><strong>MHE</strong> Ch. 6 — sharp vs. fuzzy RDD, bandwidth, local linear regression.</li>
+      <li><strong>Cattaneo, Idrobo &amp; Titiunik</strong> — <a href="https://rdpackages.github.io/references/Cattaneo-Idrobo-Titiunik_2020_CUP.pdf" target="_blank">free PDF</a>. Read before coding.</li>
+    </ul>
+    <div class="sl">Exercises</div>
+    <div class="ex">
+      <div class="exh"><span class="ext">Ex 10.1 — Full RDD pipeline as a mini referee report</span><div class="exa"><button class="hb" onclick="th(this)">hint</button><button class="cb" onclick="cc(this)">copy</button></div></div>
+      <div class="exd"><strong>Goal:</strong> Using <code>meyersson</code> from <code>causaldata</code> (Islamic party win → female education), run a full RDD workflow: (1) <code>rdplot()</code>, (2) main estimate, (3) 4-point bandwidth sensitivity, (4) McCrary density test, (5) placebo covariate test.</div>
+      <pre><span class="kw">library</span>(<span class="pk">rdrobust</span>); <span class="kw">library</span>(<span class="pk">rddensity</span>)
+<span class="fn">data</span>(<span class="str">"meyersson"</span>, package=<span class="str">"causaldata"</span>)
+<span class="td"># rdplot(y=meyersson$hischseccomp, x=meyersson$iwm94, c=0)
+# rdd &lt;- rdrobust(meyersson$hischseccomp, meyersson$iwm94, c=0); summary(rdd)
+# bw &lt;- rdd$bws[1]
+# sapply(c(0.5,1,1.5,2)*bw, function(h) { r &lt;- rdrobust(..., h=h); c(h=h,coef=r$coef[1]) })
+# dc &lt;- rddensity(meyersson$iwm94, c=0); summary(dc)
+# rdrobust(meyersson$lpop1994, meyersson$iwm94, c=0)$coef  # placebo</span></pre>
+      <div class="hp">Bandwidth loop: <code>rdrobust(y, x, c=0, h=h)</code>. For the placebo, use a pre-election covariate as Y — estimate should be near zero if continuity holds.</div>
+    </div>
+    <div class="dv"><div class="dl">Deliverable</div><p><code>week10.qmd</code> as a mini referee report: visualisation, main estimate, bandwidth sensitivity, density test, placebo, verdict on credibility.</p></div>
+  </div>
+</div>
+
+<!-- W11 LOW -->
+<div class="wc low" id="week-11">
+  <div class="wh" onclick="tw(11)">
+    <div class="chk" onclick="td(event,11)"><span class="ci">✓</span></div>
+    <span class="wnum">Week 11</span>
+    <div class="wtw"><div class="wt">Catch-up &amp; Identification Review</div><div class="wm">Review W6–10 · write assumption summaries</div></div>
+    <span class="lo-badge">low intensity</span>
+    <span class="whr">~2h</span><span class="wch">▶</span>
+  </div>
+  <div class="wb">
+    <div class="lo-note"><strong>↓ Low-intensity week.</strong> W6–10 is the densest block in Part 1. Use this to catch up on any incomplete exercises or re-read anything that didn't fully click.</div>
+    <div class="sl">If current — identification summary exercise</div>
+    <ul class="il">
+      <li>For each of IV, DiD, and RDD: write a 3-sentence summary of (a) the identifying assumption, (b) what would violate it, and (c) what test you'd run to assess it. This is essentially pre-writing the cheatsheet due in W15.</li>
+      <li>Skim the <code>marginaleffects</code> package intro (<a href="https://marginaleffects.com" target="_blank">marginaleffects.com</a>) — you'll use it in W13 and Part 2.</li>
+    </ul>
+  </div>
+</div>
+</div><!-- end month 2 -->
+
+<!-- ── MONTH 3 ── -->
+<div class="ms">
+<div class="mh"><span class="mb m3">Month 3</span><span class="mt">Modern Methods</span></div>
+
+<!-- W12 -->
+<div class="wc" id="week-12">
+  <div class="wh" onclick="tw(12)">
+    <div class="chk" onclick="td(event,12)"><span class="ci">✓</span></div>
+    <span class="wnum">Week 12</span>
+    <div class="wtw"><div class="wt">Matching &amp; Synthetic Control</div><div class="wm">Mixtape · MatchIt · cobalt · tidysynth</div></div>
+    <span class="whr">~4h</span><span class="wch">▶</span>
+  </div>
+  <div class="wb">
+    <div class="sl">Reading</div>
+    <ul class="il">
+      <li><strong>Mixtape</strong> — Matching chapter. Read critically: why are econometricians skeptical of matching as primary identification?</li>
+      <li><strong>The Effect</strong> Ch. 14–15 — balance diagnostics and love plots.</li>
+    </ul>
+    <div class="sl">Exercises</div>
+    <div class="ex">
+      <div class="exh"><span class="ext">Ex 12.1 — PSM with covariate balance diagnostics</span><div class="exa"><button class="hb" onclick="th(this)">hint</button><button class="cb" onclick="cc(this)">copy</button></div></div>
+      <div class="exd"><strong>Goal:</strong> On <code>lalonde</code>, run 1:1 nearest-neighbour PSM. Love plot showing balance before/after. Estimate ATT on matched sample; compare to naive OLS.</div>
+      <pre><span class="kw">library</span>(<span class="pk">MatchIt</span>); <span class="kw">library</span>(<span class="pk">cobalt</span>); <span class="fn">data</span>(<span class="str">"lalonde"</span>, package=<span class="str">"MatchIt"</span>)
+<span class="td"># m_ols   &lt;- feols(re78 ~ treat, lalonde)
+# m_match &lt;- matchit(treat ~ age+educ+race+married+re74+re75,
+#                    lalonde, method="nearest", distance="logit", ratio=1)
+# love.plot(m_match, binary="std", threshold=0.1)
+# matched &lt;- match.data(m_match)
+# m_att   &lt;- feols(re78 ~ treat, matched, weights=~weights, vcov=~subclass)
+# etable(m_ols, m_att)</span></pre>
+      <div class="hp">After matching, <code>match.data()</code> adds <code>weights</code> column. Cluster SEs at <code>~subclass</code>. SMD &lt; 0.1 = well balanced.</div>
+    </div>
+    <div class="dv"><div class="dl">Deliverable</div><p><code>week12.qmd</code>: Love plot, OLS vs. PSM table, critical paragraph on why IV/DiD is preferred over matching for identification.</p></div>
+  </div>
+</div>
+
+<!-- W13 -->
+<div class="wc" id="week-13">
+  <div class="wh" onclick="tw(13)">
+    <div class="chk" onclick="td(event,13)"><span class="ci">✓</span></div>
+    <span class="wnum">Week 13</span>
+    <div class="wtw"><div class="wt">Double / Debiased Machine Learning</div><div class="wm">Chernozhukov et al. (2018) · DoubleML · mlr3</div></div>
+    <span class="whr">~5h</span><span class="wch">▶</span>
+  </div>
+  <div class="wb">
+    <div class="sl">Reading</div>
+    <ul class="il">
+      <li><strong>Chernozhukov et al. (2018)</strong> Sections 1–2. Focus on Neyman orthogonality — why naive plug-in ML gives biased SEs.</li>
+      <li><strong>DoubleML R vignette</strong> (<a href="https://docs.doubleml.org" target="_blank">docs.doubleml.org</a>) — read before coding.</li>
+    </ul>
+    <div class="concept"><strong>Your edge:</strong> DoubleML's nuisance models benefit from tuned learners — directly your thesis terrain. Cross-fitting is the statistical innovation; HPO is operational.</div>
+    <div class="sl">Exercises</div>
+    <div class="ex">
+      <div class="exh"><span class="ext">Ex 13.1 — Full DML pipeline from scratch</span><div class="exa"><button class="hb" onclick="th(this)">hint</button><button class="cb" onclick="cc(this)">copy</button></div></div>
+      <div class="exd"><strong>Goal:</strong> Build a PLR on <code>hdm::bonus</code> with <code>ranger</code> nuisance learners, 5-fold cross-fitting. Compare to naive OLS. Explain why naive plug-in ML fails.</div>
+      <pre><span class="kw">library</span>(<span class="pk">DoubleML</span>); <span class="kw">library</span>(<span class="pk">mlr3</span>); <span class="kw">library</span>(<span class="pk">mlr3learners</span>); <span class="kw">library</span>(<span class="pk">data.table</span>)
+<span class="fn">data</span>(<span class="str">"bonus"</span>, package=<span class="str">"hdm"</span>); dt <span class="op">&lt;-</span> <span class="fn">as.data.table</span>(bonus)
+<span class="td"># dml_data &lt;- DoubleMLData$new(dt, y_col="inuidur1", d_cols="tg",
+#                              x_cols=setdiff(names(dt), c("inuidur1","tg")))
+# lrn_y &lt;- lrn("regr.ranger", num.trees=500)
+# lrn_d &lt;- lrn("classif.ranger", num.trees=500, predict_type="prob")
+# dml   &lt;- DoubleMLPLR$new(dml_data, lrn_y, lrn_d, n_folds=5, n_rep=3)
+# dml$fit(); dml$summary()
+# ols &lt;- feols(inuidur1 ~ tg + ., bonus, vcov="hetero")
+# cat("OLS:", coef(ols)["tg"], "  DML:", dml$coef)</span></pre>
+      <div class="hp">The classifier needs <code>predict_type="prob"</code> — without it you get class labels, not probabilities, and DML will error. Set <code>n_rep=3</code> for stability across cross-fitting repetitions.</div>
+    </div>
+    <div class="dv"><div class="dl">Deliverable</div><p><code>week13.qmd</code>: OLS vs. DML comparison, written explanation of regularisation bias, optional: tuned nuisance model using HPO.</p></div>
+  </div>
+</div>
+
+<!-- W14 -->
+<div class="wc" id="week-14">
+  <div class="wh" onclick="tw(14)">
+    <div class="chk" onclick="td(event,14)"><span class="ci">✓</span></div>
+    <span class="wnum">Week 14</span>
+    <div class="wtw"><div class="wt">Replication Project</div><div class="wm">Angrist data archive · Social Science Reproduction Platform · GitHub</div></div>
+    <span class="whr">~6h</span><span class="wch">▶</span>
+  </div>
+  <div class="wb">
+    <div class="concept"><strong>This is the most important week in Part 1.</strong> Every judgment call glossed over in exercises — sample restrictions, SE choices, functional form — surfaces here.</div>
+    <div class="sl">Steps</div>
+    <ul class="il">
+      <li><strong>Choose a paper.</strong> <a href="https://economics.mit.edu/people/faculty/josh-angrist/angrist-data-archive" target="_blank">Angrist data archive</a>, <a href="https://www.socialsciencereproduction.org" target="_blank">Social Science Reproduction Platform</a>, or any W7–10 paper you found hardest.</li>
+      <li><strong>Cold reproduce the main table</strong> — no looking at R translations. Compare your output to the paper's. Document every discrepancy.</li>
+      <li><strong>Run ≥2 robustness checks</strong> not in the paper: alternative bandwidth, different clustering level, dropped/added covariates.</li>
+      <li><strong>Write a Quarto report</strong>: background, replication table vs. paper, robustness section, honest reflection.</li>
+      <li><strong>Push to GitHub</strong> with structure: <code>data/</code>, <code>code/</code>, <code>output/</code>, <code>report.qmd</code>, README.</li>
+    </ul>
+    <div class="dv"><div class="dl">Deliverable</div><p>Public GitHub repo with rendered Quarto HTML. This is portfolio piece #1.</p></div>
+  </div>
+</div>
+
+<!-- W15 -->
+<div class="wc" id="week-15">
+  <div class="wh" onclick="tw(15)">
+    <div class="chk" onclick="td(event,15)"><span class="ci">✓</span></div>
+    <span class="wnum">Week 15</span>
+    <div class="wtw"><div class="wt">Consolidation &amp; Identification Cheatsheet</div><div class="wm">Hansen Ch. 13–14 (light) · marginaleffects · review</div></div>
+    <span class="whr">~3h</span><span class="wch">▶</span>
+  </div>
+  <div class="wb">
+    <div class="sl">Tasks</div>
+    <ul class="il">
+      <li>Skim your W1–14 <code>.qmd</code> files — identify anything still fuzzy, spend 30 min on it.</li>
+      <li>Read <strong>Hansen</strong> Ch. 13–14 lightly — GMM and MLE in the econometric context. Connects your stats background to what you've been doing empirically.</li>
+      <li>Explore <strong><code>marginaleffects</code></strong>: <code>avg_slopes()</code>, <code>comparisons()</code>, <code>predictions()</code>. Apply to your W7 IV model and your W10 RDD. Confirm linear-model results match manual extraction.</li>
+      <li>Write your personal cheatsheet <code>.qmd</code>: for each of 6 identification strategies — key assumption, failure mode, R package, canonical dataset, 3-line code stub <em>from memory</em>.</li>
+    </ul>
+    <div class="dv"><div class="dl">Deliverable</div><p>Rendered cheatsheet HTML added to your W14 GitHub repo.</p></div>
+  </div>
+</div>
+</div><!-- end month 3 -->
+
+<!-- ══════════════════════════════════════
+     RECAP
+══════════════════════════════════════ -->
+<div class="part-div recap-div">
+  <div class="pd-label">Recap · Weeks 16–17</div>
+  <div class="pd-title">Portfolio Review &amp; Bridge</div>
+  <div class="pd-desc">Two weeks between the two parts. W16 is deliberately light — review and consolidate. W17 is a reading week that introduces the time series mindset and prepares you conceptually for W18. No new code is required in either week.</div>
+</div>
+
+<div class="ms">
+<div class="mh"><span class="mb mr">Recap</span><span class="mt">Review &amp; Bridge</span></div>
+
+<!-- W16 LOW -->
+<div class="wc low" id="week-16">
+  <div class="wh" onclick="tw(16)">
+    <div class="chk" onclick="td(event,16)"><span class="ci">✓</span></div>
+    <span class="wnum">Week 16</span>
+    <div class="wtw"><div class="wt">Portfolio Review &amp; Gap Filling</div><div class="wm">Flexible catch-up week</div></div>
+    <span class="lo-badge">low intensity</span>
+    <span class="whr">~2h</span><span class="wch">▶</span>
+  </div>
+  <div class="wb">
+    <div class="lo-note"><strong>↓ Low-intensity week.</strong> If you have any incomplete work from W1–15, do it now. If fully current, use this week as described below.</div>
+    <div class="sl">If current</div>
+    <ul class="il">
+      <li>Re-read your W14 replication report cold, as if you're a reviewer. What's missing? What claim is asserted but not tested? Jot 3 improvements.</li>
+      <li>Review your cheatsheet from W15. For each identification strategy: could you implement it from memory with a blank R file? Test yourself on the one you're least confident about.</li>
+      <li>Check your GitHub repo: are the README files informative to a stranger? Do the Quarto HTML files render correctly on GitHub Pages?</li>
+    </ul>
+  </div>
+</div>
+
+<!-- W17 -->
+<div class="wc" id="week-17">
+  <div class="wh" onclick="tw(17)">
+    <div class="chk" onclick="td(event,17)"><span class="ci">✓</span></div>
+    <span class="wnum">Week 17</span>
+    <div class="wtw"><div class="wt">Bridge to Time Series — Mindset &amp; Reading</div><div class="wm">Enders Ch. 1 · fpp3 Ch. 1–2 · conceptual prep</div></div>
+    <span class="whr">~3h</span><span class="wch">▶</span>
+  </div>
+  <div class="wb">
+    <div class="sl">Reading</div>
+    <ul class="il">
+      <li><strong>Enders</strong> Ch. 1 — "Economic Time Series: The Stylized Facts." Read for concepts only: stationarity, white noise, autocorrelation, seasonality. No maths yet.</li>
+      <li><strong>Hyndman &amp; Athanasopoulos</strong> Ch. 1–2 (<a href="https://otexts.com/fpp3" target="_blank">otexts.com/fpp3</a>) — tidy time series, tsibble, <code>autoplot()</code>. Free. Load a real dataset and plot it.</li>
+    </ul>
+    <div class="concept"><strong>The key mindset shift:</strong> In Part 1, observations were assumed independent conditional on controls. In time series, sequential dependence is the point — you model <em>how the past predicts the future</em>. The causal identification tools from Part 1 still apply, but the data generating process is fundamentally different.</div>
+    <div class="sl">One light exercise</div>
+    <ul class="il">
+      <li>Load <code>aus_production</code> from <code>tsibbledata</code>. Plot beer production with <code>autoplot()</code>. Add a seasonal subseries plot with <code>gg_season()</code>. Describe what you see in three sentences. That's it for this week.</li>
+    </ul>
+  </div>
+</div>
+</div><!-- end recap -->
+
+<!-- ══════════════════════════════════════
+     PART 2
+══════════════════════════════════════ -->
+<div class="part-div p2-div">
+  <div class="pd-label">Part 2 · Weeks 18–30</div>
+  <div class="pd-title">Time Series + Advanced Methods</div>
+  <div class="pd-desc">Introduces time series econometrics from scratch — stationarity, ARMA, unit roots, cointegration, VARs — then deepens the causal toolkit with causal forests, shift-share IV, synthetic DiD, RKD, SVAR, and local projections. Closes with a capstone combining both halves.</div>
+</div>
+
+<!-- ── MONTH 4 ── -->
+<div class="ms">
+<div class="mh"><span class="mb m4">Month 4</span><span class="mt">Time Series Econometrics</span></div>
+
+<!-- W18 -->
+<div class="wc" id="week-18">
+  <div class="wh" onclick="tw(18)">
+    <div class="chk" onclick="td(event,18)"><span class="ci">✓</span></div>
+    <span class="wnum">Week 18</span>
+    <div class="wtw"><div class="wt">ARMA Models &amp; Stationarity</div><div class="wm">Enders Ch. 1–2 · fpp3 Ch. 1–3 · forecast / feasts</div></div>
+    <span class="whr">~4h</span><span class="wch">▶</span>
+  </div>
+  <div class="wb">
+    <div class="sl">Reading</div>
+    <ul class="il">
+      <li><strong>Enders</strong> Ch. 1–2 — stationarity, white noise, Wold decomposition. Understand weak vs. strict stationarity.</li>
+      <li><strong>fpp3</strong> Ch. 3 — ACF and PACF in the tidy framework.</li>
+      <li><strong>Hamilton</strong> Ch. 3 — AR(p)/MA(q) lag polynomial notation. Skim derivations.</li>
+    </ul>
+    <div class="concept"><strong>Diagnostic rule:</strong> AR(p) — ACF decays geometrically, PACF cuts off at lag p. MA(q) — ACF cuts off at lag q, PACF decays. Know this cold before coding.</div>
+    <div class="sl">Exercises</div>
+    <div class="ex">
+      <div class="exh"><span class="ext">Ex 18.1 — Simulate AR/MA; identify from ACF/PACF</span><div class="exa"><button class="hb" onclick="th(this)">hint</button><button class="cb" onclick="cc(this)">copy</button></div></div>
+      <div class="exd"><strong>Goal:</strong> Simulate AR(1), AR(2), MA(1), MA(2). For each, plot ACF and PACF side by side. Identify order visually <em>before</em> confirming with <code>auto.arima()</code>.</div>
+      <pre><span class="kw">library</span>(<span class="pk">forecast</span>); <span class="fn">set.seed</span>(<span class="nm">42</span>)
+<span class="td"># ar1 &lt;- arima.sim(model=list(ar=0.8), n=500)
+# ma1 &lt;- arima.sim(model=list(ma=0.6), n=500)
+# par(mfrow=c(2,2)); acf(ar1); pacf(ar1); acf(ma1); pacf(ma1)
+# auto.arima(ar1, ic="aic"); auto.arima(ma1, ic="bic")</span></pre>
+      <div class="hp">AR(1) φ=0.8: ACF decays slowly, PACF has one spike at lag 1 then cuts off. MA(1): exactly the reverse. Use <code>lag.max=20</code> to see the full picture.</div>
+    </div>
+    <div class="ex">
+      <div class="exh"><span class="ext">Ex 18.2 — Fit ARMA to real data; check residuals</span><div class="exa"><button class="hb" onclick="th(this)">hint</button><button class="cb" onclick="cc(this)">copy</button></div></div>
+      <div class="exd"><strong>Goal:</strong> Fit <code>auto.arima()</code> to DAX log returns from <code>EuStockMarkets</code>. Run <code>checkresiduals()</code> for the Ljung-Box test. Manually try an alternative model and compare AIC.</div>
+      <pre>dax <span class="op">&lt;-</span> <span class="fn">diff</span>(<span class="fn">log</span>(<span class="fn">EuStockMarkets</span>[,<span class="str">"DAX"</span>]))
+<span class="td"># m_auto   &lt;- auto.arima(dax, ic="aic"); summary(m_auto)
+# checkresiduals(m_auto)   # Ljung-Box p > 0.05 = white noise residuals
+# m_manual &lt;- Arima(dax, order=c(???,0,???))
+# cat("Auto AIC:", AIC(m_auto), "  Manual AIC:", AIC(m_manual))</span></pre>
+      <div class="hp">Log returns are already stationary — no differencing needed. Ljung-Box H0 = no autocorrelation in residuals. p &gt; 0.05 = good fit.</div>
+    </div>
+    <div class="dv"><div class="dl">Deliverable</div><p><code>week18.qmd</code>: ACF/PACF grid for four simulated processes, auto.arima fit on DAX returns, residual diagnostic with Ljung-Box interpretation.</p></div>
+  </div>
+</div>
+
+<!-- W19 -->
+<div class="wc" id="week-19">
+  <div class="wh" onclick="tw(19)">
+    <div class="chk" onclick="td(event,19)"><span class="ci">✓</span></div>
+    <span class="wnum">Week 19</span>
+    <div class="wtw"><div class="wt">Unit Roots, Spurious Regression &amp; Differencing</div><div class="wm">Enders Ch. 4 · Granger &amp; Newbold (1974) · tseries</div></div>
+    <span class="whr">~4h</span><span class="wch">▶</span>
+  </div>
+  <div class="wb">
+    <div class="sl">Reading</div>
+    <ul class="il">
+      <li><strong>Enders</strong> Ch. 4 — the most important TS chapter. Understand why OLS t-statistics don't follow standard distributions under a unit root.</li>
+      <li><strong>Granger &amp; Newbold (1974)</strong> "Spurious Regressions in Econometrics" — 4 pages. Read the original before the simulation below.</li>
+    </ul>
+    <div class="sl">Exercises</div>
+    <div class="ex">
+      <div class="exh"><span class="ext">Ex 19.1 — Demonstrate spurious regression via Monte Carlo</span><div class="exa"><button class="hb" onclick="th(this)">hint</button><button class="cb" onclick="cc(this)">copy</button></div></div>
+      <div class="exd"><strong>Goal:</strong> Simulate two independent random walks. Regress one on the other — show OLS finds a "significant" relationship. Repeat 1000 times and plot the t-stat distribution vs. N(0,1). Then difference both and show the spurious result disappears.</div>
+      <pre><span class="fn">set.seed</span>(<span class="nm">99</span>); n <span class="op">&lt;-</span> <span class="nm">200</span>
+<span class="td"># rw1 &lt;- cumsum(rnorm(n)); rw2 &lt;- cumsum(rnorm(n))
+# summary(feols(rw2 ~ rw1))
+# t_stats &lt;- replicate(1000, {
+#   x &lt;- cumsum(rnorm(n)); y &lt;- cumsum(rnorm(n))
+#   coef(summary(lm(y~x)))["x","t value"] })
+# hist(t_stats, breaks=50, freq=FALSE); curve(dnorm(x), add=TRUE, col="red")
+# summary(feols(diff(rw2) ~ diff(rw1)))   # fix: first-difference</span></pre>
+      <div class="hp">The t-stat distribution under spurious regression has fat tails — much wider than N(0,1). After differencing, both series become I(0) and the relationship correctly disappears.</div>
+    </div>
+    <div class="ex">
+      <div class="exh"><span class="ext">Ex 19.2 — ADF, PP, and KPSS tests</span><div class="exa"><button class="hb" onclick="th(this)">hint</button><button class="cb" onclick="cc(this)">copy</button></div></div>
+      <div class="exd"><strong>Goal:</strong> Run ADF, PP, and KPSS on a random walk and a stationary AR(1). Note that ADF/PP share one null hypothesis while KPSS has the <em>opposite</em>. Apply all three to log DAX level vs. log returns.</div>
+      <pre><span class="kw">library</span>(<span class="pk">tseries</span>)
+<span class="td"># rw  &lt;- cumsum(rnorm(300)); ar1 &lt;- arima.sim(list(ar=0.5), 300)
+# adf.test(rw);  adf.test(ar1)    # H0: unit root
+# pp.test(rw);   pp.test(ar1)     # H0: unit root (robust to serial corr)
+# kpss.test(rw); kpss.test(ar1)   # H0: STATIONARITY (inverted!)
+# dax_lvl &lt;- log(EuStockMarkets[,"DAX"]); dax_ret &lt;- diff(dax_lvl)
+# # Apply all three to both</span></pre>
+      <div class="hp">If ADF fails to reject AND KPSS rejects: both agree on unit root. If they conflict: structural breaks or near-unit-root. KPSS has inverted logic — want p &gt; 0.05 to support stationarity.</div>
+    </div>
+    <div class="dv"><div class="dl">Deliverable</div><p><code>week19.qmd</code>: Spurious regression Monte Carlo with t-stat histogram, test results table for simulated and real series, summary of each test's burden of proof.</p></div>
+  </div>
+</div>
+
+<!-- W20 LOW -->
+<div class="wc low" id="week-20">
+  <div class="wh" onclick="tw(20)">
+    <div class="chk" onclick="td(event,20)"><span class="ci">✓</span></div>
+    <span class="wnum">Week 20</span>
+    <div class="wtw"><div class="wt">Cointegration &amp; Error Correction Models</div><div class="wm">Enders Ch. 6 · Engle &amp; Granger (1987)</div></div>
+    <span class="lo-badge">low intensity</span>
+    <span class="whr">~2h</span><span class="wch">▶</span>
+  </div>
+  <div class="wb">
+    <div class="lo-note"><strong>↓ Low-intensity week.</strong> If behind on W18–19, catch up here. If current, one reading session + one short exercise.</div>
+    <div class="sl">Reading</div>
+    <ul class="il">
+      <li><strong>Engle &amp; Granger (1987)</strong> — first 6 pages only. Skip the proofs.</li>
+      <li><strong>Enders</strong> Ch. 6.1–6.3 — intuition: two I(1) series that share a long-run equilibrium.</li>
+    </ul>
+    <div class="concept"><strong>The dog-on-a-lead analogy:</strong> Two cointegrated random walks wander independently short-term but are tethered. The ECM term measures deviation from equilibrium and how fast they revert.</div>
+    <div class="sl">Exercise</div>
+    <div class="ex">
+      <div class="exh"><span class="ext">Ex 20.1 — Engle-Granger two-step and ECM</span><div class="exa"><button class="hb" onclick="th(this)">hint</button><button class="cb" onclick="cc(this)">copy</button></div></div>
+      <div class="exd"><strong>Goal:</strong> Simulate two cointegrated series. Engle-Granger step 1: regress y on x, ADF-test the residuals (should reject unit root). Step 2: fit ECM — confirm error-correction coefficient is negative.</div>
+      <pre><span class="fn">set.seed</span>(<span class="nm">7</span>); n <span class="op">&lt;-</span> <span class="nm">400</span>
+<span class="td"># x &lt;- cumsum(rnorm(n))
+# y &lt;- 0.8*x + arima.sim(list(ar=0.3), n)
+# lr      &lt;- lm(y ~ x); resid_lr &lt;- residuals(lr)
+# adf.test(resid_lr)   # reject H0 → cointegrated
+# ecm_df  &lt;- data.frame(dy=diff(y), dx=diff(x), ect=resid_lr[-length(resid_lr)])
+# m_ecm   &lt;- feols(dy ~ dx + ect, ecm_df)
+# summary(m_ecm)   # ect must be negative</span></pre>
+      <div class="hp">ECM coefficient on <code>ect</code> must be negative — this captures mean reversion. A value of −0.3 means 30% of any deviation from long-run equilibrium is corrected per period.</div>
+    </div>
+    <div class="dv"><div class="dl">Deliverable</div><p><code>week20.qmd</code>: ADF on cointegrating residuals, ECM output confirming negative coefficient, one-paragraph intuition of what the ECM coefficient means.</p></div>
+  </div>
+</div>
+
+<!-- W21 -->
+<div class="wc" id="week-21">
+  <div class="wh" onclick="tw(21)">
+    <div class="chk" onclick="td(event,21)"><span class="ci">✓</span></div>
+    <span class="wnum">Week 21</span>
+    <div class="wtw"><div class="wt">VAR Models, IRFs &amp; Granger Causality</div><div class="wm">Enders Ch. 5 · Lütkepohl Ch. 1–2 · vars</div></div>
+    <span class="whr">~5h</span><span class="wch">▶</span>
+  </div>
+  <div class="wb">
+    <div class="sl">Reading</div>
+    <ul class="il">
+      <li><strong>Enders</strong> Ch. 5 — VAR representation, lag selection (AIC/BIC/HQ), IRFs, FEVD.</li>
+      <li><strong>Stock &amp; Watson (2001)</strong> "Vector Autoregressions" JEP — very readable. Optional but highly recommended.</li>
+    </ul>
+    <div class="concept"><strong>On Granger causality:</strong> Granger causality is predictive, not causal in the structural sense. X "Granger-causes" Y if past X helps forecast Y beyond past Y alone. Don't confuse this with the causal identification tools from Part 1.</div>
+    <div class="sl">Exercises</div>
+    <div class="ex">
+      <div class="exh"><span class="ext">Ex 21.1 — Bivariate VAR: lag order, IRFs, Granger</span><div class="exa"><button class="hb" onclick="th(this)">hint</button><button class="cb" onclick="cc(this)">copy</button></div></div>
+      <div class="exd"><strong>Goal:</strong> Using <code>Canada</code> from <code>vars</code> (<code>prod</code> and <code>e</code>), select lag order with <code>VARselect()</code>, fit <code>VAR()</code>, plot IRFs with bootstrap CIs, run Granger causality both ways.</div>
+      <pre><span class="kw">library</span>(<span class="pk">vars</span>); <span class="fn">data</span>(<span class="str">"Canada"</span>)
+<span class="td"># y &lt;- Canada[, c("prod","e")]
+# VARselect(y, lag.max=8, type="const")   # compare AIC, BIC, HQ
+# m_var &lt;- VAR(y, p=???, type="const")
+# irf_out &lt;- irf(m_var, impulse="prod", response="e",
+#                n.ahead=10, boot=TRUE, ci=0.95); plot(irf_out)
+# causality(m_var, cause="prod")
+# causality(m_var, cause="e")</span></pre>
+      <div class="hp">AIC tends to pick more lags than BIC. For quarterly macro data 2–4 is typical. IRF: if CI band includes zero at all horizons, response is not statistically significant. <code>causality()</code> is a Wald test — reject H0 = past X significantly improves forecast of Y.</div>
+    </div>
+    <div class="dv"><div class="dl">Deliverable</div><p><code>week21.qmd</code>: Lag selection table, IRF with CIs, Granger results, paragraph distinguishing Granger causality from Part 1 causal identification.</p></div>
+  </div>
+</div>
+
+<!-- W22 LOW -->
+<div class="wc low" id="week-22">
+  <div class="wh" onclick="tw(22)">
+    <div class="chk" onclick="td(event,22)"><span class="ci">✓</span></div>
+    <span class="wnum">Week 22</span>
+    <div class="wtw"><div class="wt">Time Series Catch-up &amp; Consolidation</div><div class="wm">Flexible buffer · optional Johansen test</div></div>
+    <span class="lo-badge">low intensity</span>
+    <span class="whr">~2h</span><span class="wch">▶</span>
+  </div>
+  <div class="wb">
+    <div class="lo-note"><strong>↓ Low-intensity week.</strong> W18–21 is dense. Use this to finish any incomplete TS exercises. If current, try the optional extension below.</div>
+    <div class="sl">Optional extension: Johansen cointegration test</div>
+    <ul class="il">
+      <li>The Engle-Granger test in W20 only handles one cointegrating vector. The Johansen test (<code>urca::ca.jo()</code>) generalises to multiple cointegrating relationships in a VAR.</li>
+      <li>Apply <code>ca.jo()</code> to the <code>Canada</code> dataset from W21. Interpret the trace and max-eigenvalue test statistics. Compare to the Engle-Granger approach.</li>
+    </ul>
+  </div>
+</div>
+</div><!-- end month 4 -->
+
+<!-- ── MONTH 5 ── -->
+<div class="ms">
+<div class="mh"><span class="mb m5">Month 5</span><span class="mt">Advanced Causal Inference</span></div>
+
+<!-- W23 -->
+<div class="wc" id="week-23">
+  <div class="wh" onclick="tw(23)">
+    <div class="chk" onclick="td(event,23)"><span class="ci">✓</span></div>
+    <span class="wnum">Week 23</span>
+    <div class="wtw"><div class="wt">Heterogeneous Treatment Effects &amp; Causal Forests</div><div class="wm">Wager &amp; Athey (2018) · Athey &amp; Imbens (2016) · grf</div></div>
+    <span class="whr">~5h</span><span class="wch">▶</span>
+  </div>
+  <div class="wb">
+    <div class="sl">Reading</div>
+    <ul class="il">
+      <li><strong>Athey &amp; Imbens (2016)</strong> "Recursive Partitioning for HTE" — introduction and Section 2. The honest splitting idea is the key innovation.</li>
+      <li><strong>Wager &amp; Athey (2018)</strong> Sections 1–2. Focus on the asymptotic normality result.</li>
+      <li><strong>grf vignette</strong> (<a href="https://grf-labs.github.io/grf" target="_blank">grf-labs.github.io/grf</a>) — read before coding.</li>
+    </ul>
+    <div class="concept"><strong>Link to Part 1:</strong> Every identification strategy in Part 1 recovered an average effect (ATE/ATT). Causal forests estimate τ(x) = E[Y(1)−Y(0)|X=x] — the CATE as a function of covariates. This is a fundamentally different estimand.</div>
+    <div class="sl">Exercises</div>
+    <div class="ex">
+      <div class="exh"><span class="ext">Ex 23.1 — Causal forest: CATEs, BLP test, subgroup plot</span><div class="exa"><button class="hb" onclick="th(this)">hint</button><button class="cb" onclick="cc(this)">copy</button></div></div>
+      <div class="exd"><strong>Goal:</strong> On <code>lalonde</code>, fit a causal forest. Extract individual CATEs. Test heterogeneity with <code>best_linear_projection()</code>. Plot CATEs vs. age.
+        <ol><li>Prepare X, Y, W matrices.</li><li><code>causal_forest(X,Y,W, num.trees=2000)</code>.</li><li><code>predict(cf)$predictions</code> → individual CATEs.</li><li>BLP test: significant HET coef = genuine heterogeneity.</li></ol></div>
+      <pre><span class="kw">library</span>(<span class="pk">grf</span>); <span class="fn">data</span>(<span class="str">"lalonde"</span>, package=<span class="str">"MatchIt"</span>)
+<span class="td"># X  &lt;- as.matrix(lalonde[, c("age","educ","re74","re75","married")])
+# Y  &lt;- lalonde$re78; W &lt;- lalonde$treat
+# cf &lt;- causal_forest(X, Y, W, num.trees=2000, seed=42)
+# cates &lt;- predict(cf)$predictions
+# average_treatment_effect(cf, target.sample="all")
+# best_linear_projection(cf, X)   # HET coef > 0 = heterogeneity
+# test_calibration(cf)
+# ggplot(data.frame(cate=cates, age=lalonde$age), aes(age,cate)) +
+#   geom_point(alpha=.3) + geom_smooth()</span></pre>
+      <div class="hp">BLP "HET" coefficient: if &gt; 0 with p &lt; 0.05, the forest found genuine heterogeneity. <code>test_calibration()</code> checks whether the mean prediction ≈ 1 (calibration).</div>
+    </div>
+    <div class="dv"><div class="dl">Deliverable</div><p><code>week23.qmd</code>: ATE (cf vs. PSM from W12), CATE distribution, BLP output, written interpretation of which subgroup benefits most and whether heterogeneity is credible.</p></div>
+  </div>
+</div>
+
+<!-- W24 -->
+<div class="wc" id="week-24">
+  <div class="wh" onclick="tw(24)">
+    <div class="chk" onclick="td(event,24)"><span class="ci">✓</span></div>
+    <span class="wnum">Week 24</span>
+    <div class="wtw"><div class="wt">Advanced IV — Shift-Share (Bartik) Instruments</div><div class="wm">Goldsmith-Pinkham et al. (2020) · Andrews et al. (2019)</div></div>
+    <span class="whr">~4h</span><span class="wch">▶</span>
+  </div>
+  <div class="wb">
+    <div class="sl">Reading</div>
+    <ul class="il">
+      <li><strong>Goldsmith-Pinkham, Sorkin &amp; Swift (2020)</strong> "Bartik Instruments: What, When, Why and How" — Sections 1–3. Key result: validity rests on the <em>shares</em>, not the shifts.</li>
+      <li><strong>Andrews, Stock &amp; Sun (2019)</strong> "Weak Instruments in IV Regression" — skim for modern weak-IV diagnostics beyond the first-stage F rule of thumb.</li>
+    </ul>
+    <div class="sl">Exercises</div>
+    <div class="ex">
+      <div class="exh"><span class="ext">Ex 24.1 — Construct a Bartik instrument from scratch</span><div class="exa"><button class="hb" onclick="th(this)">hint</button><button class="cb" onclick="cc(this)">copy</button></div></div>
+      <div class="exd"><strong>Goal:</strong> Build B_l = Σ_k z_lk × g_k (local industry shares × national growth rates). Use as IV for local employment growth. Compare OLS to IV; check first-stage F.
+        <ol><li>Simulate L=100 locations, K=10 industries. Shares sum to 1 per location.</li><li>Bartik = <code>shares %*% nat_growth</code>.</li><li>Use as instrument in <code>feols(y ~ 1|0|D ~ Z)</code>.</li></ol></div>
+      <pre><span class="fn">set.seed</span>(<span class="nm">101</span>); L<span class="op">&lt;-</span><span class="nm">100</span>; K<span class="op">&lt;-</span><span class="nm">10</span>
+<span class="td"># shares   &lt;- apply(matrix(runif(L*K), L, K), 1, function(x) x/sum(x))
+# nat_gr   &lt;- colMeans(matrix(rnorm(L*K,.02,.05), L, K))
+# bartik   &lt;- shares %*% nat_gr   # L×1 vector
+# D &lt;- bartik + rnorm(L,.0,.1)
+# y &lt;- 2*(bartik + rnorm(L,.0,.1)) + rnorm(L,sd=.5)
+# df &lt;- data.frame(D=as.vector(D), y, Z=as.vector(bartik))
+# etable(feols(y~D,df), feols(y~1|0|D~Z,df), headers=c("OLS","Bartik IV"))</span></pre>
+      <div class="hp">Bartik construction: <code>shares %*% nat_growth</code> gives a L×1 matrix — use <code>as.vector()</code>. The key identifying assumption: national industry growth rates are exogenous to local shocks. Plausible if the local region is small relative to the national economy.</div>
+    </div>
+    <div class="dv"><div class="dl">Deliverable</div><p><code>week24.qmd</code>: Bartik construction, OLS vs. IV table, paragraph on what makes the exclusion restriction plausible in a real application of your choice.</p></div>
+  </div>
+</div>
+
+<!-- W25 -->
+<div class="wc" id="week-25">
+  <div class="wh" onclick="tw(25)">
+    <div class="chk" onclick="td(event,25)"><span class="ci">✓</span></div>
+    <span class="wnum">Week 25</span>
+    <div class="wtw"><div class="wt">Synthetic Difference-in-Differences</div><div class="wm">Arkhangelsky et al. (2021) · synthdid · Abadie et al. (2010)</div></div>
+    <span class="whr">~4h</span><span class="wch">▶</span>
+  </div>
+  <div class="wb">
+    <div class="sl">Reading</div>
+    <ul class="il">
+      <li><strong>Arkhangelsky et al. (2021)</strong> "Synthetic DiD" — introduction and Section 2. SDiD reweights both units and time periods, combining SC and DiD.</li>
+      <li><strong>Abadie, Diamond &amp; Hainmueller (2010)</strong> — skim for the original SC setup. SDiD generalises it.</li>
+    </ul>
+    <div class="sl">Exercises</div>
+    <div class="ex">
+      <div class="exh"><span class="ext">Ex 25.1 — SDiD vs. DiD vs. SC: three-way comparison</span><div class="exa"><button class="hb" onclick="th(this)">hint</button><button class="cb" onclick="cc(this)">copy</button></div></div>
+      <div class="exd"><strong>Goal:</strong> Using <code>california_prop99</code> (canonical SC example — smoking), estimate the treatment effect three ways. Compare pre-treatment fit visually.</div>
+      <pre><span class="kw">library</span>(<span class="pk">synthdid</span>); <span class="fn">data</span>(<span class="str">"california_prop99"</span>)
+<span class="td"># setup    &lt;- panel.matrices(california_prop99)
+# est_sdid &lt;- synthdid_estimate(setup$Y, setup$N0, setup$T0)
+# est_did  &lt;- did_estimate(setup$Y, setup$N0, setup$T0)
+# est_sc   &lt;- sc_estimate(setup$Y, setup$N0, setup$T0)
+# estimates &lt;- list("SDiD"=est_sdid, "DiD"=est_did, "SC"=est_sc)
+# synthdid_plot(estimates)
+# se_sdid &lt;- sqrt(vcov(est_sdid, method="placebo"))
+# cat("SDiD:", est_sdid, "±", se_sdid)</span></pre>
+      <div class="hp">SDiD should show the best pre-treatment fit because it reweights both units (like SC) and time periods (emphasising the recent pre-treatment window). Placebo SE permutes treatment assignment across control units.</div>
+    </div>
+    <div class="dv"><div class="dl">Deliverable</div><p><code>week25.qmd</code>: Three-way comparison table, <code>synthdid_plot()</code>, paragraph on which method has the best pre-treatment fit and why that matters.</p></div>
+  </div>
+</div>
+
+<!-- W26 -->
+<div class="wc" id="week-26">
+  <div class="wh" onclick="tw(26)">
+    <div class="chk" onclick="td(event,26)"><span class="ci">✓</span></div>
+    <span class="wnum">Week 26</span>
+    <div class="wtw"><div class="wt">Regression Kink Design</div><div class="wm">Card, Lee, Pei &amp; Weber (2015) · Kleven (2016) · rdrobust kink mode</div></div>
+    <span class="whr">~3h</span><span class="wch">▶</span>
+  </div>
+  <div class="wb">
+    <div class="sl">Reading</div>
+    <ul class="il">
+      <li><strong>Card et al. (2015)</strong> "Generalized RKD" — Sections 1–2. The estimand is a slope change, not a level jump.</li>
+      <li><strong>Kleven (2016)</strong> "Bunching" Annual Review — most accessible RKD/bunching introduction.</li>
+    </ul>
+    <div class="concept"><strong>RKD vs. RDD:</strong> In RDD, treatment <em>level</em> jumps. In RKD, treatment <em>slope</em> changes. Same <code>rdrobust</code> package, <code>deriv=1</code> argument.</div>
+    <div class="sl">Exercises</div>
+    <div class="ex">
+      <div class="exh"><span class="ext">Ex 26.1 — Simulate an RKD and recover the true slope change</span><div class="exa"><button class="hb" onclick="th(this)">hint</button><button class="cb" onclick="cc(this)">copy</button></div></div>
+      <div class="exd"><strong>Goal:</strong> DGP: X ~ Uniform(−2,2), D = max(0,X), Y = 1 + 0.5·D + noise. Visualise the kink with <code>rdplot()</code>. Recover the true slope change (0.5) with <code>rdrobust(..., deriv=1)</code>.</div>
+      <pre><span class="fn">set.seed</span>(<span class="nm">55</span>); n<span class="op">&lt;-</span><span class="nm">2000</span>
+<span class="td"># x &lt;- runif(n,-2,2); D &lt;- pmax(0,x); y &lt;- 1 + 0.5*D + rnorm(n,sd=.5)
+# rdplot(y, x, c=0, title="Kink visible here")
+# rk &lt;- rdrobust(y, x, c=0, deriv=1); summary(rk)   # should be ≈ 0.5</span></pre>
+      <div class="hp"><code>deriv=1</code> estimates the derivative discontinuity — the change in slope at the cutoff. The estimand is E[dY/dX | X=0⁺] − E[dY/dX | X=0⁻]. Local quadratic (rather than linear) is typical for RKD.</div>
+    </div>
+    <div class="dv"><div class="dl">Deliverable</div><p><code>week26.qmd</code>: rdplot showing the kink, RKD estimate confirming recovery of true slope, one paragraph distinguishing RKD from RDD conceptually.</p></div>
+  </div>
+</div>
+</div><!-- end month 5 -->
+
+<!-- ── MONTH 6 ── -->
+<div class="ms">
+<div class="mh"><span class="mb m6">Month 6</span><span class="mt">Structural Time Series + Capstone</span></div>
+
+<!-- W27 -->
+<div class="wc" id="week-27">
+  <div class="wh" onclick="tw(27)">
+    <div class="chk" onclick="td(event,27)"><span class="ci">✓</span></div>
+    <span class="wnum">Week 27</span>
+    <div class="wtw"><div class="wt">SVAR &amp; Local Projections</div><div class="wm">Jordà (2005) · Stock &amp; Watson (2016) · vars / lpirfs</div></div>
+    <span class="whr">~5h</span><span class="wch">▶</span>
+  </div>
+  <div class="wb">
+    <div class="sl">Reading</div>
+    <ul class="il">
+      <li><strong>Jordà (2005)</strong> "Estimation of IRFs by Local Projections" — Sections 1–2. LP is a more robust alternative to SVAR IRFs.</li>
+      <li><strong>Ramey (2016)</strong> Handbook chapter — skim Section 2 for identification schemes overview.</li>
+    </ul>
+    <div class="concept"><strong>LP vs. SVAR:</strong> Both produce IRFs. SVAR imposes a structural model — misspecification propagates bias. LP runs a separate regression at each horizon h: Y_{t+h} = β_h shock_t + controls. More robust, wider CIs, increasingly preferred in modern empirical macro.</div>
+    <div class="sl">Exercises</div>
+    <div class="ex">
+      <div class="exh"><span class="ext">Ex 27.1 — LP IRF vs. VAR IRF: overlay and compare</span><div class="exa"><button class="hb" onclick="th(this)">hint</button><button class="cb" onclick="cc(this)">copy</button></div></div>
+      <div class="exd"><strong>Goal:</strong> Re-use the VAR from W21 and its IRFs. Implement local projections manually by looping over horizons h=0,…,12, regressing the led outcome on the shock. Overlay both IRFs on one plot.</div>
+      <pre><span class="fn">data</span>(<span class="str">"Canada"</span>); <span class="kw">library</span>(<span class="pk">vars</span>)
+<span class="td"># m_var   &lt;- VAR(Canada[,c("prod","e")], p=2, type="const")
+# irf_var &lt;- irf(m_var, impulse="prod", response="e", n.ahead=12, boot=TRUE)
+# shock   &lt;- residuals(m_var)[,"prod"]
+# e_ser   &lt;- Canada[,"e"]; H &lt;- 12
+# lp_coefs &lt;- sapply(0:H, function(h) {
+#   n    &lt;- length(shock)
+#   y_h  &lt;- c(e_ser[(h+3):n], rep(NA,h+2))   # lead by h, trim for VAR lags
+#   df_h &lt;- data.frame(y=y_h[1:(n-2)], s=shock[1:(n-2)])
+#   coef(feols(y ~ s, df_h))["s"] })
+# # Plot lp_coefs and irf_var$irf$prod side by side</span></pre>
+      <div class="hp">LP CIs are wider than VAR CIs by construction — this reflects LP's robustness to misspecification. The two sets of point estimates should be similar unless the VAR is misspecified. Include lagged controls in each LP regression to absorb autocorrelation.</div>
+    </div>
+    <div class="dv"><div class="dl">Deliverable</div><p><code>week27.qmd</code>: Overlaid VAR vs. LP IRF plot, paragraph: "When would you prefer LP over SVAR, and what does the wider CI tell you?"</p></div>
+  </div>
+</div>
+
+<!-- W28 -->
+<div class="wc" id="week-28">
+  <div class="wh" onclick="tw(28)">
+    <div class="chk" onclick="td(event,28)"><span class="ci">✓</span></div>
+    <span class="wnum">Week 28</span>
+    <div class="wtw"><div class="wt">Forecasting — ARIMA, ETS &amp; Model Evaluation</div><div class="wm">fpp3 Ch. 8–10 · fable · Diebold-Mariano</div></div>
+    <span class="whr">~4h</span><span class="wch">▶</span>
+  </div>
+  <div class="wb">
+    <div class="sl">Reading</div>
+    <ul class="il">
+      <li><strong>fpp3</strong> Ch. 8–10 — ARIMA, ETS, and time-series cross-validation with <code>fable</code>.</li>
+      <li><strong>Diebold &amp; Mariano (1995)</strong> — go-to test for comparing forecast accuracy. 8 pages.</li>
+    </ul>
+    <div class="sl">Exercises</div>
+    <div class="ex">
+      <div class="exh"><span class="ext">Ex 28.1 — Forecast comparison with rolling-origin CV</span><div class="exa"><button class="hb" onclick="th(this)">hint</button><button class="cb" onclick="cc(this)">copy</button></div></div>
+      <div class="exd"><strong>Goal:</strong> On <code>aus_production</code> beer data, fit ARIMA, ETS, and SNAIVE with <code>fable</code>. Evaluate via rolling-origin CV. Test forecast superiority with Diebold-Mariano.</div>
+      <pre><span class="kw">library</span>(<span class="pk">fable</span>); <span class="kw">library</span>(<span class="pk">tsibbledata</span>); <span class="kw">library</span>(<span class="pk">feasts</span>)
+<span class="td"># beer   &lt;- aus_production |&gt; select(Quarter, Beer) |&gt; filter(!is.na(Beer))
+# fit    &lt;- beer |&gt; model(arima=ARIMA(Beer), ets=ETS(Beer), snaive=SNAIVE(Beer~lag("year")))
+# forecast(fit, h=8) |&gt; autoplot(beer)
+# beer_cv &lt;- beer |&gt; stretch_tsibble(.init=60, .step=4)
+# cv_fit  &lt;- beer_cv |&gt; model(arima=ARIMA(Beer), ets=ETS(Beer), snaive=SNAIVE(Beer~lag("year")))
+# cv_fc   &lt;- forecast(cv_fit, h=4)
+# cv_fc |&gt; accuracy(beer) |&gt; arrange(RMSE)
+# # Extract per-model errors for dm.test()</span></pre>
+      <div class="hp"><code>stretch_tsibble(.init=60, .step=4)</code> creates a rolling-origin CV dataset. <code>accuracy(beer)</code> computes RMSE, MAE, MAPE per model. For DM test: extract forecast errors aligned by date, then <code>forecast::dm.test(e1, e2)</code>.</div>
+    </div>
+    <div class="dv"><div class="dl">Deliverable</div><p><code>week28.qmd</code>: Forecast plot, CV accuracy table, DM test result, written conclusion: which model would you deploy and why?</p></div>
+  </div>
+</div>
+
+<!-- W29 LOW -->
+<div class="wc low" id="week-29">
+  <div class="wh" onclick="tw(29)">
+    <div class="chk" onclick="td(event,29)"><span class="ci">✓</span></div>
+    <span class="wnum">Week 29</span>
+    <div class="wtw"><div class="wt">Quantile Regression &amp; Distributional Effects</div><div class="wm">Koenker &amp; Hallock (2001) · quantreg</div></div>
+    <span class="lo-badge">low intensity</span>
+    <span class="whr">~2–3h</span><span class="wch">▶</span>
+  </div>
+  <div class="wb">
+    <div class="lo-note"><strong>↓ Low-intensity week.</strong> Standalone and self-contained. Use overflow from W27–28 here if needed, otherwise ~2h for reading + one exercise.</div>
+    <div class="sl">Reading</div>
+    <ul class="il">
+      <li><strong>Koenker &amp; Hallock (2001)</strong> "Quantile Regression" JEP — 12 pages. Most readable introduction.</li>
+    </ul>
+    <div class="concept"><strong>What OLS misses:</strong> OLS estimates E[Y|X]. Quantile regression estimates Q_τ[Y|X]. A minimum wage may compress the bottom of the wage distribution without shifting the mean — that's invisible to OLS.</div>
+    <div class="sl">Exercise</div>
+    <div class="ex">
+      <div class="exh"><span class="ext">Ex 29.1 — Quantile process for return to education</span><div class="exa"><button class="hb" onclick="th(this)">hint</button><button class="cb" onclick="cc(this)">copy</button></div></div>
+      <div class="exd"><strong>Goal:</strong> Fit quantile regressions at τ = 0.1, …, 0.9 on <code>wage1</code>. Extract education coefficients across quantiles. Plot the quantile process with OLS as a dashed horizontal line. Test whether coefficients are jointly equal across quantiles.</div>
+      <pre><span class="kw">library</span>(<span class="pk">quantreg</span>); <span class="fn">data</span>(<span class="str">"wage1"</span>, package=<span class="str">"wooldridge"</span>)
+<span class="td"># taus  &lt;- seq(0.1, 0.9, 0.1)
+# m_qr  &lt;- rq(wage ~ educ + exper + tenure, tau=taus, data=wage1)
+# educ_q &lt;- t(coef(m_qr))["educ",]   # or coef(m_qr)["educ",]
+# m_ols  &lt;- feols(wage ~ educ + exper + tenure, wage1)
+# ols_e  &lt;- coef(m_ols)["educ"]
+# ggplot(data.frame(tau=taus, coef=educ_q), aes(tau,coef)) +
+#   geom_line() + geom_point() +
+#   geom_hline(yintercept=ols_e, linetype="dashed", colour="firebrick")
+# anova(m_qr)   # test: jointly equal across quantiles?</span></pre>
+      <div class="hp">If the quantile process is flat, OLS is sufficient. If it rises at high τ, returns to education are larger at the top of the wage distribution. <code>anova(m_qr)</code> tests whether all τ-specific coefficients are jointly equal (H0 = OLS is sufficient).</div>
+    </div>
+    <div class="dv"><div class="dl">Deliverable</div><p><code>week29.qmd</code>: Quantile process plot with OLS overlay, anova result, one paragraph on whether education returns are heterogeneous across the wage distribution.</p></div>
+  </div>
+</div>
+
+<!-- W30 CAPSTONE -->
+<div class="wc" id="week-30">
+  <div class="wh" onclick="tw(30)">
+    <div class="chk" onclick="td(event,30)"><span class="ci">✓</span></div>
+    <span class="wnum">Week 30</span>
+    <div class="wtw"><div class="wt">Capstone Project</div><div class="wm">Combining TS + causal inference · GitHub</div></div>
+    <span class="whr">~6h</span><span class="wch">▶</span>
+  </div>
+  <div class="wb">
+    <div class="concept"><strong>The requirement:</strong> The capstone must combine at least one time series method and one causal identification strategy. This forces the two halves of Part 2 to talk to each other — which is how applied macro and labour economics actually work.</div>
+    <div class="sl">Options (choose one)</div>
+    <ul class="il">
+      <li><strong>Option A — LP-DiD:</strong> Use local projections (W27) to estimate dynamic effects of a DiD treatment. Compare impulse responses across treatment cohorts using the C&amp;S framework (W9).</li>
+      <li><strong>Option B — Forecasting + structural break:</strong> Fit a forecasting model (W28), identify a structural break with <code>strucchange::breakpoints()</code>. Use a DiD or RDD design around the break to identify its causal effect.</li>
+      <li><strong>Option C — HTE over time:</strong> Apply causal forests (W23) to a panel where the CATE may vary both across units and over time. Plot how the CATE distribution shifts across years. Validate with an event-study from W8.</li>
+      <li><strong>Option D — Replication extension:</strong> Extend your W14 replication: add a time series dimension (unit-level pre-treatment trends), or decompose the average treatment effect into quantile effects using W29 methods.</li>
+    </ul>
+    <div class="sl">Required for all options</div>
+    <ul class="il">
+      <li>Write a 1-paragraph research question and identification strategy <em>before</em> touching code.</li>
+      <li>Document all assumption checks explicitly — don't just report the main estimate.</li>
+      <li>Render as a Quarto HTML report with code folded.</li>
+      <li>Push to GitHub. Link back to your W14 replication in the README. Together, these two projects constitute your econometrics portfolio.</li>
+    </ul>
+    <div class="dv"><div class="dl">Deliverable</div><p>Public GitHub repo: Quarto HTML report, clean code, README linking both projects. Portfolio piece #2.</p></div>
+  </div>
+</div>
+</div><!-- end month 6 -->
+
+<!-- RESOURCES -->
+<div class="res">
+  <h3>Resources</h3>
+
+  <!-- buying note -->
+  <div style="background:rgba(200,169,110,.05);border:1px solid rgba(200,169,110,.18);border-radius:7px;padding:.8rem 1rem;margin-bottom:1.25rem;font-size:.8rem;color:var(--muted);line-height:1.55;">
+    <strong style="color:var(--p1);">On cost:</strong> All papers are free (arXiv / NBER / author pages). Of the textbooks, three are free online. The ones worth buying are <strong style="color:var(--text);">Wooldridge</strong> (~€45 used) and <strong style="color:var(--text);">MHE</strong> (~€35 used) — these are the two you will return to constantly. Enders is useful for Part 2 but can be borrowed from a library. Hansen (2022) is now a paid Princeton UP book; skip it — Hanck et al. (free) covers the same applied ground.
+  </div>
+
+  <h4 style="font-size:.63rem;text-transform:uppercase;letter-spacing:.1em;color:var(--dim);margin-bottom:.8rem;font-weight:400;">Part 1 Textbooks</h4>
+  <div class="rg">
+    <div class="rc">
+      <div class="rct">Textbook · Buy used</div>
+      <div class="rcn">Wooldridge — <em>Introductory Econometrics</em></div>
+      <div class="rcd">The standard applied reference. Priority: Ch. 1–3 (OLS), 13–14 (panel). The ceteris paribus framing is what distinguishes it from a pure stats course. Worth owning.</div>
+      <span class="tag tc">Core</span><span class="tag" style="color:#e08080;border-color:rgba(224,128,128,.3);">Paid ~€45</span>
+    </div>
+    <div class="rc">
+      <div class="rct">Textbook · Buy used</div>
+      <div class="rcn"><a href="https://press.princeton.edu/books/paperback/9780691120355/mostly-harmless-econometrics" target="_blank">Angrist &amp; Pischke — <em>Mostly Harmless Econometrics</em></a></div>
+      <div class="rcd">The canonical modern causal econometrics reference. Read Ch. 1–2 very slowly — the philosophical foundation of Part 1. Worth owning. No free legal PDF exists.</div>
+      <span class="tag tc">Core</span><span class="tag" style="color:#e08080;border-color:rgba(224,128,128,.3);">Paid ~€35</span>
+    </div>
+    <div class="rc">
+      <div class="rct">Free · Online book</div>
+      <div class="rcn"><a href="https://theeffectbook.net" target="_blank">Huntington-Klein — <em>The Effect</em></a></div>
+      <div class="rcd">DAG-first causal inference with R code throughout. Best companion to MHE for code-forward learners. Verified free at theeffectbook.net.</div>
+      <span class="tag tf">Free</span><span class="tag tc">Core</span>
+    </div>
+    <div class="rc">
+      <div class="rct">Free · Online book</div>
+      <div class="rcn"><a href="https://www.econometrics-with-r.org" target="_blank">Hanck et al. — <em>Econometrics with R</em></a></div>
+      <div class="rcd">Follows Wooldridge chapter-by-chapter with R code. Your primary free companion for W1–4. Covers Hansen's SE theory at an applied level — makes Hansen optional.</div>
+      <span class="tag tf">Free</span>
+    </div>
+    <div class="rc">
+      <div class="rct">Free · Online book</div>
+      <div class="rcn"><a href="https://mixtape.scunning.com" target="_blank">Cunningham — <em>Causal Inference: The Mixtape</em></a></div>
+      <div class="rcd">Accessible, code-forward treatment of IV, DiD, RDD, matching, and synthetic control. Verified free at mixtape.scunning.com.</div>
+      <span class="tag tf">Free</span><span class="tag tc">Core</span>
+    </div>
+    <div class="rc">
+      <div class="rct">Textbook · Library / paid</div>
+      <div class="rcn">Hansen — <em>Econometrics</em> (Princeton UP, 2022)</div>
+      <div class="rcd">Now a paid Princeton UP book (~€100). The pre-2021 manuscript was free but is no longer updated. Hanck et al. (above) covers the same applied ground for free. Borrow from library if needed for GMM / asymptotics theory.</div>
+      <span class="tag tr">Optional</span><span class="tag" style="color:#e08080;border-color:rgba(224,128,128,.3);">Paid ~€100</span>
+    </div>
+  </div>
+
+  <h4 style="font-size:.63rem;text-transform:uppercase;letter-spacing:.1em;color:var(--dim);margin:.9rem 0 .8rem;font-weight:400;">Part 2 Textbooks</h4>
+  <div class="rg">
+    <div class="rc">
+      <div class="rct">Textbook · Library / paid</div>
+      <div class="rcn">Enders — <em>Applied Econometric Time Series</em></div>
+      <div class="rcd">The most accessible applied TS textbook. Primary reference for W18–22. Clear on unit roots, VARs, cointegration. Borrow from university library — buying is optional given fpp3 covers forecasting for free.</div>
+      <span class="tag tc">Core TS</span><span class="tag" style="color:#e08080;border-color:rgba(224,128,128,.3);">Paid ~€60</span>
+    </div>
+    <div class="rc">
+      <div class="rct">Free · Online book</div>
+      <div class="rcn"><a href="https://otexts.com/fpp3" target="_blank">Hyndman &amp; Athanasopoulos — <em>Forecasting: Principles &amp; Practice (fpp3)</em></a></div>
+      <div class="rcd">The modern tidy forecasting reference. Uses fable throughout. Essential for W18 and W28. Verified free at otexts.com/fpp3.</div>
+      <span class="tag tf">Free</span><span class="tag tts">TS</span>
+    </div>
+    <div class="rc">
+      <div class="rct">Textbook · Reference only</div>
+      <div class="rcn">Hamilton — <em>Time Series Analysis</em></div>
+      <div class="rcd">The rigorous TS reference (1994). Very expensive new (~€100+) but widely available in university libraries. Use Ch. 3 (ARMA), Ch. 15 (unit roots) as a dictionary if Enders leaves gaps.</div>
+      <span class="tag tr">Optional</span>
+    </div>
+    <div class="rc">
+      <div class="rct">Free · PDF</div>
+      <div class="rcn"><a href="https://rdpackages.github.io/references/Cattaneo-Idrobo-Titiunik_2020_CUP.pdf" target="_blank">Cattaneo, Idrobo &amp; Titiunik — <em>Practical Intro to RDD</em></a></div>
+      <div class="rcd">Short, practical, by the rdrobust authors. Covers all diagnostics. Read before W10. Verified free PDF at rdpackages.github.io.</div>
+      <span class="tag tf">Free</span>
+    </div>
+  </div>
+
+  <h4 style="font-size:.63rem;text-transform:uppercase;letter-spacing:.1em;color:var(--dim);margin:.9rem 0 .8rem;font-weight:400;">Papers — All Free</h4>
+  <div class="rg">
+    <div class="rc">
+      <div class="rct">Paper · AER 1991 · W7</div>
+      <div class="rcn"><a href="https://www.nber.org/papers/w3572" target="_blank">Angrist &amp; Krueger (1991) — "Does Compulsory School Attendance..."</a></div>
+      <div class="rcd">The quarter-of-birth IV paper. Canonical IV example. Free NBER working paper version at the link.</div>
+      <span class="tag tf">Free</span>
+    </div>
+    <div class="rc">
+      <div class="rct">Paper · AER 1994 · W8</div>
+      <div class="rcn"><a href="https://davidcard.berkeley.edu/papers/njmin-aer.pdf" target="_blank">Card &amp; Krueger (1994) — "Minimum Wages and Employment"</a></div>
+      <div class="rcd">The original DiD paper. Free PDF on David Card's Berkeley faculty page. Read before touching code in W8.</div>
+      <span class="tag tf">Free</span>
+    </div>
+    <div class="rc">
+      <div class="rct">Paper · JoE 2021 · W9</div>
+      <div class="rcn"><a href="https://arxiv.org/abs/1803.09015" target="_blank">Callaway &amp; Sant'Anna (2021) — "DiD with Multiple Time Periods"</a></div>
+      <div class="rcd">Staggered DiD and group-time ATTs. Free on arXiv (arxiv.org/abs/1803.09015). Sections 1–3 are the priority.</div>
+      <span class="tag tf">Free</span>
+    </div>
+    <div class="rc">
+      <div class="rct">Paper · JFE 2022 · W9</div>
+      <div class="rcn"><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3794018" target="_blank">Baker, Larcker &amp; Wang (2022) — "How Much Should We Trust Staggered DiD?"</a></div>
+      <div class="rcd">Shows the TWFE problem concretely. Free on SSRN. Also available as <a href="https://www.hbs.edu/ris/Publication%20Files/21-112_8a5a4ab3-b9e7-447d-a0fe-a504b3890fb9.pdf" target="_blank">HBS working paper</a>. Read first in W9.</div>
+      <span class="tag tf">Free</span>
+    </div>
+    <div class="rc">
+      <div class="rct">Paper · Econometrics J. 2018 · W13</div>
+      <div class="rcn"><a href="https://arxiv.org/abs/1608.00060" target="_blank">Chernozhukov et al. (2018) — "Double/Debiased ML"</a></div>
+      <div class="rcd">Free on arXiv (arxiv.org/abs/1608.00060). Sections 1–2 only. Neyman orthogonality is the key insight.</div>
+      <span class="tag tf">Free</span>
+    </div>
+    <div class="rc">
+      <div class="rct">Paper · QJE 2023 · W3</div>
+      <div class="rcn"><a href="https://arxiv.org/abs/1710.02926" target="_blank">Abadie, Athey, Imbens &amp; Wooldridge (2023) — "When Should You Adjust SEs for Clustering?"</a></div>
+      <div class="rcd">Free on arXiv (arxiv.org/abs/1710.02926). Also at <a href="https://www.nber.org/papers/w24003" target="_blank">NBER w24003</a>. Prevents reflexive clustering. Read in W3.</div>
+      <span class="tag tf">Free</span>
+    </div>
+    <div class="rc">
+      <div class="rct">Paper · AER 2020 · W24</div>
+      <div class="rcn"><a href="https://www.nber.org/papers/w24408" target="_blank">Goldsmith-Pinkham, Sorkin &amp; Swift (2020) — "Bartik Instruments"</a></div>
+      <div class="rcd">Free NBER working paper (w24408). Validity rests on the shares. Sections 1–3 for W24.</div>
+      <span class="tag tf">Free</span>
+    </div>
+    <div class="rc">
+      <div class="rct">Paper · AER 2021 · W25</div>
+      <div class="rcn"><a href="https://arxiv.org/abs/1812.09970" target="_blank">Arkhangelsky et al. (2021) — "Synthetic Difference-in-Differences"</a></div>
+      <div class="rcd">Free on arXiv (arxiv.org/abs/1812.09970) and <a href="https://www.nber.org/papers/w25532" target="_blank">NBER w25532</a>. Introduction + Section 2 for W25.</div>
+      <span class="tag tf">Free</span>
+    </div>
+    <div class="rc">
+      <div class="rct">Paper · AER 2005 · W27</div>
+      <div class="rcn"><a href="https://www.aeaweb.org/articles?id=10.1257/0002828053828518" target="_blank">Jordà (2005) — "Estimation and Inference of Impulse Responses by Local Projections"</a></div>
+      <div class="rcd">Free at AEA (AER papers older than 3 years are open access). Sections 1–2 for W27.</div>
+      <span class="tag tf">Free</span>
+    </div>
+    <div class="rc">
+      <div class="rct">Paper · JEP 2001 · W29</div>
+      <div class="rcn"><a href="https://www.aeaweb.org/articles?id=10.1257/jep.15.4.143" target="_blank">Koenker &amp; Hallock (2001) — "Quantile Regression"</a></div>
+      <div class="rcd">Free at AEA (JEP papers are always open access). Also free at <a href="http://www.econ.uiuc.edu/~roger/research/rq/QRJEP.pdf" target="_blank">Koenker's site</a>. 12 pages, most readable intro. W29.</div>
+      <span class="tag tf">Free</span>
+    </div>
+    <div class="rc">
+      <div class="rct">Paper · Wager &amp; Athey 2018 · W23</div>
+      <div class="rcn"><a href="https://arxiv.org/abs/1510.04342" target="_blank">Wager &amp; Athey (2018) — "Estimation and Inference of HTE using Random Forests"</a></div>
+      <div class="rcd">Free on arXiv. Causal forest theory paper. Sections 1–2 for W23.</div>
+      <span class="tag tf">Free</span>
+    </div>
+    <div class="rc">
+      <div class="rct">Paper · Card et al. 2015 · W26</div>
+      <div class="rcn"><a href="https://www.nber.org/papers/w18386" target="_blank">Card, Lee, Pei &amp; Weber (2015) — "Generalized RKD"</a></div>
+      <div class="rcd">Free NBER working paper. Sections 1–2 for W26 (RKD).</div>
+      <span class="tag tf">Free</span>
+    </div>
+  </div>
+
+  <h4 style="font-size:.63rem;text-transform:uppercase;letter-spacing:.1em;color:var(--dim);margin:.9rem 0 .8rem;font-weight:400;">Identification Quick Reference</h4>
+  <div style="overflow-x:auto;margin-bottom:1.5rem">
+    <table class="st">
+      <thead><tr><th>Strategy</th><th>Key assumption</th><th>Failure mode</th><th>Package</th><th>Canonical data</th></tr></thead>
+      <tbody>
+        <tr><td>OLS + FE</td><td>Selection on observables; no time-varying confounders</td><td>Unobserved time-varying confounder</td><td><code>fixest</code></td><td>crime4</td></tr>
+        <tr><td>IV / 2SLS</td><td>Relevance + exclusion + monotonicity</td><td>Weak instrument; violated exclusion</td><td><code>fixest</code></td><td>Angrist-Krueger</td></tr>
+        <tr><td>DiD (classic)</td><td>Parallel trends in absence of treatment</td><td>Differential pre-trends</td><td><code>fixest</code></td><td>Card-Krueger</td></tr>
+        <tr><td>DiD (staggered)</td><td>Parallel trends + no anticipation</td><td>Heterogeneous effects + TWFE bias</td><td><code>did</code></td><td>mpdta</td></tr>
+        <tr><td>RDD / RKD</td><td>Continuity at cutoff; no manipulation</td><td>Sorting; discontinuous covariates</td><td><code>rdrobust</code></td><td>Meyersson</td></tr>
+        <tr><td>DoubleML</td><td>Neyman orthogonality; cond. unconfoundedness</td><td>Nuisance model misspecified</td><td><code>DoubleML</code></td><td>hdm::bonus</td></tr>
+        <tr><td>Causal Forest</td><td>Unconfoundedness; overlap</td><td>Unmeasured confounders; poor overlap</td><td><code>grf</code></td><td>lalonde</td></tr>
+        <tr><td>Synthetic DiD</td><td>Parallel trends + unit/time weights improve fit</td><td>Poor pre-treatment fit</td><td><code>synthdid</code></td><td>california_prop99</td></tr>
+        <tr><td>VAR / SVAR</td><td>Correct lag order; valid identification scheme</td><td>Lag misspecification; ordering matters</td><td><code>vars</code></td><td>Canada</td></tr>
+        <tr><td>Local Projections</td><td>Exogenous shock; valid controls</td><td>Weak shock identification</td><td><code>fixest</code></td><td>Canada</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</main>
+</div>
+<div class="toast" id="toast">Copied</div>
+<script>
+const ST=JSON.parse(localStorage.getItem('econ_full')||'{}');
+const N=30;
+function save(){localStorage.setItem('econ_full',JSON.stringify(ST));}
+function tw(n){document.getElementById('week-'+n).classList.toggle('open');}
+function td(e,n){e.stopPropagation();const c=document.getElementById('week-'+n);c.classList.toggle('done');ST['w'+n]=c.classList.contains('done');save();up();un();}
+function th(btn){const p=btn.closest('.ex').querySelector('.hp');if(!p)return;p.classList.toggle('open');btn.textContent=p.classList.contains('open')?'hide':'hint';}
+function up(){const d=Object.values(ST).filter(Boolean).length;const pct=Math.round(d/N*100);document.getElementById('pf').style.width=pct+'%';document.getElementById('pp').textContent=d+' / '+N;}
+function un(){document.querySelectorAll('.ni[data-w]').forEach(i=>{i.classList.toggle('done',!!ST['w'+i.dataset.w]);});}
+function sw(n){const e=document.getElementById('week-'+n);if(!e)return;e.scrollIntoView({behavior:'smooth',block:'start'});e.classList.add('open');const part=n<=15?'p1':n<=17?'pr':'p2';document.querySelectorAll('.ni').forEach(i=>i.classList.remove('active'));const ni=document.querySelector('.ni[data-w="'+n+'"]');if(ni){ni.classList.add('active');['p1','p2','pr'].forEach(c=>ni.classList.remove(c));ni.classList.add(part);}}
+function cc(btn){const p=btn.closest('.ex').querySelector('pre');if(!p)return;navigator.clipboard.writeText(p.innerText).then(()=>{const t=document.getElementById('toast');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1800);});}
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const n=e.target.id.replace('week-','');const part=+n<=15?'p1':+n<=17?'pr':'p2';document.querySelectorAll('.ni').forEach(i=>i.classList.remove('active'));const ni=document.querySelector('.ni[data-w="'+n+'"]');if(ni){ni.classList.add('active');['p1','p2','pr'].forEach(c=>ni.classList.remove(c));ni.classList.add(part);}}}),{threshold:.25});
+function init(){for(let n=1;n<=N;n++){if(ST['w'+n])document.getElementById('week-'+n)?.classList.add('done');}up();un();document.querySelectorAll('.wc').forEach(c=>obs.observe(c));}
+init();
+</script>
+</body>
+</html>
